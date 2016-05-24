@@ -1,3 +1,7 @@
+package entities;
+
+import entities.Character;
+
 public class Player extends Character {
 	private int experience;
 
