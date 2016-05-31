@@ -1,18 +1,17 @@
 import entities.Monster;
 import entities.Player;
-import spells.Element;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Mā {
+public class Ma {
 	private Player player;
 	private boolean running;
 	private Scanner scanner;
 
-	public Mā() {
+	public Ma() {
 		scanner = new Scanner(System.in);
 		System.out.println("Welcome to Mā ! You will fight against evil monsters using your powerful magics !");
 		System.out.print("Enter your magician name: ");
@@ -62,7 +61,7 @@ public class Mā {
 	}
 
 	public static void main(String[] args) {
-		Mā game = new Mā();
+		Ma game = new Ma();
 		game.start();
 	}
 
