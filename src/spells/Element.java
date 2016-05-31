@@ -1,8 +1,13 @@
 package spells;
 
-import entities.Monster;
+import entities.Character;
 
 public abstract class Element {
-	public abstract void applyEffect(Monster m);
+	public void applyEffect(Character from, Character to) {
+		from.removeMana(manaCost());
+		to.receiveDamage(damage());
+	}
 	public abstract int manaCost();
+	public abstract int damage();
+	public abstract Element effectiveAgainst();
 }
