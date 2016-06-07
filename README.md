@@ -17,10 +17,11 @@ Les sorts du joueur sont des combinaisons de 1, 2 ou 3 éléments.
 #### Éléments
 ![La roue des éléments](lib/elements.png)
 
-- **Feu**: Bat la roche, mais faible contre l'eau
+- **Feu**: Bat la feuille, mais faible contre l'eau
 - **Eau**: Bat le feu, mais faible contre la foudre
 - **Foudre**: Bat l'eau, mais faible contre la roche
-- **Roche**: Bat la foudre, mais faible contre le feu
+- **Roche**: Bat la foudre, mais faible contre la feuille
+- **Feuille**: Bat la roche, mais faible contre le feu
 - **Bouclier**: Doit être combiné avec au moins un autre élément pour protéger le joueur d'une prochaine attaque.
 
 
