@@ -1,16 +1,16 @@
 package spells;
 
-import entities.Monster;
+import entities.Character;
 
 public class Spell {
-	protected Element element;
+	private Element element;
 
 	public Spell(Element element) {
 		this.element = element;
 	}
 
-	public int hit(Monster m) {
-		element.applyEffect(m);
+	public int hit(Character from, Character to) {
+		element.applyEffect(from, to);
 		return element.manaCost();
 	}
 }

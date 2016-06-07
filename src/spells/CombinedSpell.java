@@ -1,6 +1,6 @@
 package spells;
 
-import entities.Monster;
+import entities.Character;
 
 public class CombinedSpell extends Spell {
 	private Spell spell;
@@ -10,9 +10,7 @@ public class CombinedSpell extends Spell {
 		this.spell = spell;
 	}
 
-	public int hit(Monster m){
-		int mana = super.hit(m);
-		spell.hit(m);
-		return mana + element.manaCost();
+	public int hit(Character from, Character to){
+		return super.hit(from, to) + spell.hit(from, to);
 	}
 }

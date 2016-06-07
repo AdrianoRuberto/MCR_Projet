@@ -1,7 +1,6 @@
 package spells;
 
 import entities.Character;
-import entities.Monster;
 
 public class Fire extends Element {
 	private static Fire instance;
@@ -34,7 +33,7 @@ public class Fire extends Element {
 
 	@Override
 	public Element effectiveAgainst() {
-		return null;
+		return Leaf.getInstance();
 	}
 
 }

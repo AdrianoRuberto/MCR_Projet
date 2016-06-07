@@ -1,7 +1,6 @@
 package spells;
 
 import entities.Character;
-import entities.Monster;
 
 public class Water extends Element {
 	private static Water instance;
