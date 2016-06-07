@@ -6,23 +6,17 @@ public class Rock extends Element {
 	private Rock() { }
 
 	public static Rock getInstance() {
-		if (instance == null)
-			instance = new Rock();
+		if (instance == null) instance = new Rock();
 		return instance;
 	}
 
 	@Override
-	public int manaCost() {
-		return 0;
-	}
-
-	@Override
-	public int damage() {
-		return 0;
-	}
-
-	@Override
-	public Element effectiveAgainst() {
+	public Element strongAgainst() {
 		return Thunder.getInstance();
+	}
+
+	@Override
+	public Element weakAgainst() {
+		return null;
 	}
 }

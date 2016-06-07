@@ -5,17 +5,17 @@ import spells.Element;
 public abstract class Character {
 	protected String name;
 	protected int level;
-	protected int hitpoints;
+	protected int healthPoints;
 	private int mana;
 
-	public Character(String name, int level, int hitpoints) {
+	public Character(String name, int level, int healthPoints) {
 		this.name = name;
 		this.level = level;
-		this.hitpoints = hitpoints;
+		this.healthPoints = healthPoints;
 	}
 
 	public boolean isAlive() {
-		return hitpoints > 0;
+		return healthPoints > 0;
 	}
 
 	public String getName() {
@@ -27,7 +27,7 @@ public abstract class Character {
 	}
 
 	public void receiveDamage(int damage, Element e) {
-		hitpoints -= damage;
+		healthPoints -= damage;
 	}
 
 }

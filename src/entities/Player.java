@@ -1,7 +1,5 @@
 package entities;
 
-import entities.Character;
-
 public class Player extends Character {
 	private int experience;
 	private int mana;
@@ -11,7 +9,7 @@ public class Player extends Character {
 		this.experience = 0;
 	}
 
-	public String toString(){
+	public String toString() {
 		return String.format("%s: Level %d - %dXP", name, level, experience);
 	}
 

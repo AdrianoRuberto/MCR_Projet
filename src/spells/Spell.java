@@ -10,7 +10,7 @@ public class Spell {
 	}
 
 	public int hit(Character from, Character to) {
-		element.applyEffect(from, to);
-		return element.manaCost();
+
+		return 0;
 	}
 }

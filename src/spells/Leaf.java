@@ -6,23 +6,17 @@ public class Leaf extends Element {
 	private Leaf() { }
 
 	public static Leaf getInstance() {
-		if (instance == null)
-			instance = new Leaf();
+		if (instance == null) instance = new Leaf();
 		return instance;
 	}
 
 	@Override
-	public int manaCost() {
-		return 0;
-	}
-
-	@Override
-	public int damage() {
-		return 0;
-	}
-
-	@Override
-	public Element effectiveAgainst() {
+	public Element strongAgainst() {
 		return Rock.getInstance();
+	}
+
+	@Override
+	public Element weakAgainst() {
+		return null;
 	}
 }

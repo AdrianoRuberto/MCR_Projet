@@ -1,7 +1,5 @@
 package entities;
 
-import entities.Character;
-
 import java.util.Random;
 
 public class Monster extends Character {
@@ -17,9 +15,8 @@ public class Monster extends Character {
 	}
 
 	public int hit() {
-		return random.nextInt(rngDamage)-rngDamage/2+avgDamage;
+		return random.nextInt(rngDamage) - rngDamage / 2 + avgDamage;
 	}
 
-	
 
 }

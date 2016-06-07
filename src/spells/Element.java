@@ -1,11 +1,9 @@
 package spells;
 
-import entities.Character;
-
 public abstract class Element {
-	public abstract Element effectiveAgainst();
-	public abstract Element weakAgainst();
+	public abstract Element strongAgainst();
 
+	public abstract Element weakAgainst();
 }
 
 
