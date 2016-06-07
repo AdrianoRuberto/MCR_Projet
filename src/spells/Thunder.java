@@ -17,6 +17,6 @@ public class Thunder extends Element {
 
 	@Override
 	public Element weakAgainst() {
-		return null;
+		return Rock.getInstance();
 	}
 }

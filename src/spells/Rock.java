@@ -17,6 +17,6 @@ public class Rock extends Element {
 
 	@Override
 	public Element weakAgainst() {
-		return null;
+		return Leaf.getInstance();
 	}
 }

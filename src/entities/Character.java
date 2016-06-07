@@ -2,10 +2,13 @@ package entities;
 
 import spells.Element;
 
+import java.util.Optional;
+
 public abstract class Character {
 	protected String name;
 	protected int level;
 	protected int healthPoints;
+	private Element last;
 	private int mana;
 
 	public Character(String name, int level, int healthPoints) {
@@ -26,8 +29,12 @@ public abstract class Character {
 		mana -= n;
 	}
 
-	public void receiveDamage(int damage, Element e) {
+	public void receiveDamage(int damage, Element element) {
+		last = element;
 		healthPoints -= damage;
 	}
 
+	public Optional<Element> getLastElement() {
+		return Optional.ofNullable(last);
+	}
 }

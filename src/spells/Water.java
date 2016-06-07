@@ -17,7 +17,7 @@ public class Water extends Element {
 
 	@Override
 	public Element weakAgainst() {
-		return null;
+		return Thunder.getInstance();
 	}
 
 }

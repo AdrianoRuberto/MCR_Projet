@@ -17,6 +17,6 @@ public class Leaf extends Element {
 
 	@Override
 	public Element weakAgainst() {
-		return null;
+		return Fire.getInstance();
 	}
 }

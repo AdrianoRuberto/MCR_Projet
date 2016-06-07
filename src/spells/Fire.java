@@ -17,7 +17,7 @@ public class Fire extends Element {
 
 	@Override
 	public Element weakAgainst() {
-		return null;
+		return Water.getInstance();
 	}
 
 }
