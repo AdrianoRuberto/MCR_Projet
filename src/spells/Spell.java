@@ -15,10 +15,9 @@ public class Spell {
 	 * Hits a character with this spell.
 	 *
 	 * @param from the character who cast the spell
-	 * @param to
-	 * @return
+	 * @param to the character who get it by the spell
 	 */
-	public int hit(Character from, Character to) {
+	public void hit(Character from, Character to) {
 		Optional<Element> last = to.getLastElement();
 
 		double dmg = 10;
@@ -30,8 +29,6 @@ public class Spell {
 		}
 
 		to.receiveDamage((int) dmg, element);
-
-		return getManaCost();
 	}
 
 	/**

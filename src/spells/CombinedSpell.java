@@ -14,8 +14,9 @@ public class CombinedSpell extends Spell {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int hit(Character from, Character to) {
-		return super.hit(from, to) + spell.hit(from, to);
+	public void hit(Character from, Character to) {
+		super.hit(from, to);
+		spell.hit(from, to);
 	}
 
 	/**
