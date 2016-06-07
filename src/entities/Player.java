@@ -2,7 +2,6 @@ package entities;
 
 public class Player extends Character {
 	private int experience;
-	private int mana;
 
 	public Player(String name) {
 		super(name, 1, 10);

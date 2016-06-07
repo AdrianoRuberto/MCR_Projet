@@ -29,6 +29,10 @@ public abstract class Character {
 		mana -= n;
 	}
 
+	public int getMana() {
+		return mana;
+	}
+
 	public void receiveDamage(int damage, Element element) {
 		last = element;
 		healthPoints -= damage;

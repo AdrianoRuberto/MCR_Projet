@@ -11,6 +11,13 @@ public class Spell {
 		this.element = element;
 	}
 
+	/**
+	 * Hits a character with this spell.
+	 *
+	 * @param from the character who cast the spell
+	 * @param to
+	 * @return
+	 */
 	public int hit(Character from, Character to) {
 		Optional<Element> last = to.getLastElement();
 
@@ -24,6 +31,15 @@ public class Spell {
 
 		to.receiveDamage((int) dmg, element);
 
+		return getManaCost();
+	}
+
+	/**
+	 * Gets the mana cost of the spell.
+	 *
+	 * @return the mana cost of the spell
+	 */
+	public int getManaCost() {
 		return 10;
 	}
 }

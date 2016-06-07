@@ -10,7 +10,19 @@ public class CombinedSpell extends Spell {
 		this.spell = spell;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public int hit(Character from, Character to) {
 		return super.hit(from, to) + spell.hit(from, to);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getManaCost() {
+		return super.getManaCost() + spell.getManaCost();
 	}
 }
