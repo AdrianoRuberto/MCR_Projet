@@ -77,4 +77,5 @@ public class Ma {
 			this.description = description;
 		}
 	}
+
 }

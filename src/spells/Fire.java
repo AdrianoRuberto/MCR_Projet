@@ -5,9 +5,7 @@ import entities.Character;
 public class Fire extends Element {
 	private static Fire instance;
 
-	private Fire() {
-
-	}
+	private Fire() { }
 
 	public static Fire getInstance() {
 		if (instance == null)
@@ -16,9 +14,10 @@ public class Fire extends Element {
 	}
 
 	@Override
-	public void applyEffect(Character from, Character to) {
-		to.setState(to.getState() == State.WET ? State.NORMAL : State.BURNED);
-		super.applyEffect(from, to);
+	public Aura auraEffect(Aura a) {
+		if (a == Aura.WATER) return Aura.NORMAL;
+		else if (a == Aura.LEAF) return Aura.FIRE;
+		else return a;
 	}
 
 	@Override
@@ -27,13 +26,13 @@ public class Fire extends Element {
 	}
 
 	@Override
-	public int damage() {
-		return 0;
+	public Element effectiveAgainst() {
+		return Leaf.getInstance();
 	}
 
 	@Override
-	public Element effectiveAgainst() {
-		return Leaf.getInstance();
+	public Element weakAgainst() {
+		return null;
 	}
 
 }

@@ -3,8 +3,7 @@ package spells;
 public class Rock extends Element {
 	private static Rock instance;
 
-	private Rock() {
-	}
+	private Rock() { }
 
 	public static Rock getInstance() {
 		if (instance == null)

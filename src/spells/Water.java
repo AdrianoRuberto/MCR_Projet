@@ -5,8 +5,7 @@ import entities.Character;
 public class Water extends Element {
 	private static Water instance;
 
-	private Water() {
-	}
+	private Water() { }
 
 	public static Water getInstance() {
 		if (instance == null)
@@ -16,7 +15,7 @@ public class Water extends Element {
 
 	@Override
 	public void applyEffect(Character from, Character to) {
-		to.setState(to.getState() == State.BURNED ? State.NORMAL : State.WET);
+		to.setAura(to.getAura() == Aura.BURNED ? Aura.NORMAL : Aura.WET);
 		super.applyEffect(from, to);
 	}
 
