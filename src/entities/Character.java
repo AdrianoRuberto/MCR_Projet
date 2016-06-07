@@ -1,9 +1,13 @@
 package entities;
 
+import spells.State;
+
 public abstract class Character {
 	protected String name;
 	protected int level;
 	protected int hitpoints;
+	private int mana;
+	private State state = State.NORMAL;
 
 	public Character(String name, int level, int hitpoints) {
 		this.name = name;
@@ -17,5 +21,21 @@ public abstract class Character {
 
 	public String getName() {
 		return name;
+	}
+
+	public void removeMana(int n) {
+		mana -= n;
+	}
+
+	public void receiveDamage(int damage) {
+		hitpoints -= damage;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	}
 }

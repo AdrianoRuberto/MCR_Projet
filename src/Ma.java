@@ -41,7 +41,6 @@ public class Ma {
 			List<Command> commands = Arrays.stream(input.split("-")).map(Command::valueOf).collect(Collectors.toList());
 			if (commands.contains(Command.menu)){
 				printMenu();
-				return;
 			}
 		} catch (IllegalArgumentException e){
 			System.out.println("Command not recognized");

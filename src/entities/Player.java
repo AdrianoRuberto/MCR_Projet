@@ -4,7 +4,7 @@ import entities.Character;
 
 public class Player extends Character {
 	private int experience;
-
+	private int mana;
 
 	public Player(String name) {
 		super(name, 1, 10);
@@ -14,4 +14,5 @@ public class Player extends Character {
 	public String toString(){
 		return String.format("%s: Level %d - %dXP", name, level, experience);
 	}
+
 }

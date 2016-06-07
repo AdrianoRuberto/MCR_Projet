@@ -20,7 +20,6 @@ public class Monster extends Character {
 		return random.nextInt(rngDamage)-rngDamage/2+avgDamage;
 	}
 
-	public void receiveDamage(int damage) {
-		hitpoints -= damage;
-	}
+
+
 }
