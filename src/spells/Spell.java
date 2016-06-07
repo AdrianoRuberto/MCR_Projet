@@ -15,7 +15,7 @@ public class Spell {
 	 * Hits a character with this spell.
 	 *
 	 * @param from the character who cast the spell
-	 * @param to the character who get it by the spell
+	 * @param to the character who get hit by the spell
 	 */
 	public void hit(Character from, Character to) {
 		Optional<Element> last = to.getLastElement();
