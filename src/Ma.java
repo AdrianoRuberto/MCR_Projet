@@ -27,7 +27,8 @@ public class Ma {
 		Monster monster = generateMonster();
 		System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
 		printMenu();
-		readCommand();
+		while (!readCommand())
+			;
 	}
 
 	public void stop() {
@@ -38,25 +39,31 @@ public class Ma {
 		return new Monster("Goblin", 1, 10, 2, 1);
 	}
 
-	private void readCommand() {
+	private boolean readCommand() {
 		String input = scanner.nextLine();
 		try {
 			ArrayList<Command> commands = Arrays.stream(input.split(" ")).map(Command::valueOf).collect(Collectors.toCollection(ArrayList<Command>::new));
-			if (commands.contains(Command.menu)){
 
 				switch (commands.get(0)){
 
 					case menu:
 						printMenu();
-						break;
+						return true;
 
 					case quit:
 						stop();
-						break;
+						return true;
 
 					case help:
-						System.out.println(commands.get(1).helpText);
-						break;
+						if (commands.size() == 2)
+						{
+							System.out.println(commands.get(1).helpText);
+							return true;
+						}
+						else {
+							System.out.println("help comand should be folloed by another command\n Please retry!");
+							return false;
+						}
 
 					default:
 						Spell spell = new Spell(commands.get(0).element);
@@ -65,11 +72,10 @@ public class Ma {
 							spell = new CombinedSpell(spell, commands.get(i).element);
 						}
 				}
-			}
 		} catch (IllegalArgumentException e){
 			System.out.println("Command not recognized");
 		}
-
+		return false;
 	}
 
 	public void printState() {
