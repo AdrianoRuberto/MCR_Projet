@@ -22,9 +22,9 @@ public class Spell {
 
 		double dmg = 10;
 		if (last.isPresent()) {
-			if (element.strongAgainst() == last.get())
+			if (element.getStrong() == last.get())
 				dmg *= 1.5;
-			else if (element.weakAgainst() == last.get())
+			else if (element.getWeak() == last.get())
 				dmg *= 0.5;
 		}
 

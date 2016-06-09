@@ -12,6 +12,11 @@ public abstract class Character {
 	private int mana;
 
 	public Character(String name, int level, int healthPoints) {
+		if (level <= 0) {
+			throw new IllegalArgumentException("Level should be > 0");
+		} else if (healthPoints <= 0) {
+			throw new IllegalArgumentException("HP should be > 0");
+		}
 		this.name = name;
 		this.level = level;
 		this.healthPoints = healthPoints;
