@@ -1,4 +1,4 @@
-import entities.Monster;
+import entities.ConcreteMonster;
 import entities.Player;
 import spells.CombinedSpell;
 import spells.Element;
@@ -24,7 +24,7 @@ public class Ma {
 	}
 
 	public void start() {
-		Monster monster = generateMonster();
+		ConcreteMonster monster = generateMonster();
 		System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
 		printMenu();
 		while (!readCommand())
@@ -35,8 +35,8 @@ public class Ma {
 		running = false;
 	}
 
-	private Monster generateMonster() {
-		return new Monster("Goblin", 1, 10, 2, 1);
+	private ConcreteMonster generateMonster() {
+		return new ConcreteMonster("Goblin", 1, 10, 2, 1);
 	}
 
 	private boolean readCommand() {
