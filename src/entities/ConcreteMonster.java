@@ -6,7 +6,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class ConcreteMonster extends Monster {
@@ -40,62 +42,53 @@ public class ConcreteMonster extends Monster {
 	}
 
 	private enum MonsterType {
-		anguille_geante("Anguille géante", Element.THUNDER),
-		araignee_rouge("Araignée rouge", Element.FIRE),
-		araignee_geante("Araignée géante", Element.NORMAL),
-		auroch("Auroch", Element.ROCK),
-		basilic("Basilic", Element.LEAF),
-		calmar("Calmar", Element.WATER),
-		chauve_souris("Chauve-souris géante", Element.ROCK),
-		chimere("Chimère", Element.THUNDER),
-		cockatrice("Cockatrice", Element.THUNDER),
-		crocodile("Crocodile", Element.WATER),
-		cyclope("Cyclope", Element.ROCK),
-		demon_ombres("Démon des ombres", Element.NORMAL),
-		diablotin("Diablotin", Element.FIRE),
-		dragon_noir("Dragon noir", Element.FIRE),
-		dragon_dairain("Dragon d'airain", Element.FIRE),
-		dryade("Dryade", Element.WATER),
-		efrit("Efrit", Element.FIRE),
-		elementaire_eau("Élementaire d'eau", Element.WATER),
-		elementaire_feu("Élementaire de feu", Element.FIRE),
-		elementaire_terre("Élementaire de terre", Element.ROCK),
-		elementaire_vegetal("Élementaire végétal", Element.LEAF),
-		elementaire_foudre("Élementaire de foudre", Element.THUNDER),
-		fantome("Fantôme", Element.NORMAL),
-		fourmi_geante("Fourmi géante", Element.LEAF),
-		geant_pierre("Géant de pierre", Element.ROCK),
-		geant_tempete("Géant des tempêtes", Element.THUNDER),
-		gnoll("Gnoll", Element.NORMAL),
-		gobelin("Gobelin", Element.NORMAL),
-		gobelours("Gobelours", Element.LEAF),
-		gorgone("Gorgone", Element.ROCK),
-		gorille("Gorille", Element.LEAF),
-		grenouille_venimeuse("Grenouille venimeuse", Element.LEAF),
-		griffon("Griffon", Element.THUNDER),
-		grizzly("Grizzly", Element.NORMAL),
-		harpie("Harpie", Element.NORMAL),
-		hydre("Hydre", Element.WATER),
-		homme_poisson("Homme-poisson", Element.WATER),
-		kobold("Kobold", Element.ROCK),
-		kraken("Kraken", Element.WATER),
-		licorne("Licorne", Element.NORMAL, "licorne.utf8"),
-		loup_garou("Loup-garou", Element.NORMAL),
-		meduse("Méduse", Element.WATER),
-		minotaure("Minotaure", Element.ROCK),
-		molosse_infernal("Molosse infernal", Element.FIRE),
-		necrophage("Nécrophage", Element.NORMAL),
-		ogre("Ogre", Element.ROCK),
-		ours_sanguinaire("Ours sanguinaire", Element.NORMAL),
-		phoenix("Phoenix", Element.FIRE),
-		pixie("Pixie", Element.THUNDER),
-		rat_garou("Rat-garou", Element.NORMAL),
-		requin_sanguinaire("Requin sanguinaire", Element.WATER),
-		squelette("Squelette", Element.NORMAL),
-		succube("Succube", Element.FIRE),
-		tertre_errant("Tertre errant", Element.LEAF),
-		vampire("Vampire", Element.NORMAL),
-		zombi("Zombi", Element.NORMAL)
+		anguille_geante("Anguille géante", Element.THUNDER, "anguille.ascii"),
+		araignee_rouge("Araignée rouge", Element.FIRE, "araignee.ascii"),
+		araignee_geante("Araignée géante", Element.NORMAL, "araignee.ascii"),
+		auroch("Auroch", Element.ROCK, "auroch.ascii"),
+		basilic("Basilic", Element.LEAF, "basilic.ascii"),
+		calmar("Calmar", Element.WATER, "calmar.ascii"),
+		chauve_souris("Chauve-souris géante", Element.ROCK, "chauve_souris.ascii"),
+		crocodile("Crocodile", Element.WATER, "crocodile.ascii"),
+		cyclope("Cyclope", Element.ROCK, "cyclope.ascii"),
+		demon("Démon", Element.NORMAL, "demon.ascii"),
+		diablotin("Diablotin", Element.FIRE, "diablotin.ascii"),
+		dragon_noir("Dragon noir", Element.FIRE, "dragon.ascii"),
+		dragon_glace("Dragon de glace", Element.WATER, "dragon.ascii"),
+		efrit("Efrit", Element.FIRE, "efrit.ascii"),
+		elementaire_eau("Élementaire d'eau", Element.WATER, "elementaire_eau.ascii"),
+		elementaire_feu("Élementaire de feu", Element.FIRE, "elementaire_feu.ascii"),
+		elementaire_terre("Élementaire de terre", Element.ROCK, "elementaire_roche.ascii"),
+		elementaire_vegetal("Élementaire végétal", Element.LEAF, "elementaire_plante.ascii"),
+		elementaire_foudre("Élementaire de foudre", Element.THUNDER, "elementaire_foudre.ascii"),
+		fantome("Fantôme", Element.NORMAL, "fantome.ascii"),
+		fourmi_geante("Fourmi géante", Element.LEAF, "fourmi.ascii"),
+		geant_pierre("Géant de pierre", Element.ROCK, "geant.ascii"),
+		geant_tempete("Géant des tempêtes", Element.THUNDER, "geant.ascii"),
+		gobelin("Gobelin", Element.NORMAL, "gobelin.ascii"),
+		gobelours("Gobelours", Element.LEAF, "ours.ascii"),
+		gorille("Gorille", Element.LEAF, "gorille.ascii"),
+		grenouille_venimeuse("Grenouille venimeuse", Element.LEAF, "grenouille.ascii"),
+		griffon("Griffon", Element.THUNDER, "griffon.ascii"),
+		grizzly("Grizzly", Element.NORMAL, "ours.ascii"),
+		harpie("Harpie", Element.NORMAL, "harpie.ascii"),
+		hydre("Hydre", Element.WATER, "hydre.ascii"),
+		kraken("Kraken", Element.WATER, "kraken.ascii"),
+		licorne("Licorne", Element.NORMAL, "licorne.ascii"),
+		loup_garou("Loup-garou", Element.NORMAL, "loup_garou.ascii"),
+		minotaure("Minotaure", Element.ROCK, "minotaure.ascii"),
+		molosse_infernal("Molosse infernal", Element.FIRE, "molosse.ascii"),
+		ogre("Ogre", Element.ROCK, "ogre.ascii"),
+		ours_sanguinaire("Ours sanguinaire", Element.NORMAL, "ours.ascii"),
+		phoenix("Phoenix", Element.FIRE, "phoenix.ascii"),
+		pixie("Pixie", Element.THUNDER, "pixie.ascii"),
+		rat_garou("Rat-garou", Element.NORMAL, "rat_garou.ascii"),
+		requin_sanguinaire("Requin sanguinaire", Element.WATER, "requin.ascii"),
+		squelette("Squelette", Element.NORMAL, "squelette.ascii"),
+		succube("Succube", Element.FIRE, "succube.ascii"),
+		tertre_errant("Tertre errant", Element.LEAF, "elementaire_plante.ascii"),
+		vampire("Vampire", Element.NORMAL, "vampire.ascii"),
+		zombie("Zombie", Element.NORMAL, "zombie.ascii")
 		;
 
 		private final int baseHP;
@@ -107,12 +100,9 @@ public class ConcreteMonster extends Monster {
 		public static final String spritesPath = "sprites";
 
 
-		MonsterType(String name, Element elem){
-			this(name, elem, 10, 5);
-		}
 
 		MonsterType(String name, Element elem, String spritePath) {
-			this(name, elem);
+			this(name, elem, 10, 5);
 
 			try {
 				File spriteFile = new File(spritesPath + "/" + spritePath);
@@ -132,6 +122,17 @@ public class ConcreteMonster extends Monster {
 
 		public String sprite(){
 			return sprite;
+		}
+	}
+
+	public static void main(String[] args){
+		Scanner s = new Scanner(System.in);
+		int i = 0;
+		while (!Objects.equals(s.next(), "stop")){
+			MonsterType m = MonsterType.values()[i++%MonsterType.values().length];
+			System.out.println(m.sprite);
+			System.out.println(m.name);
+
 		}
 	}
 
