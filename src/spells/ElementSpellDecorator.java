@@ -19,6 +19,9 @@ public class ElementSpellDecorator extends SpellDecorator {
 		this.element = element;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void hit(Character from, Character to) {
 		super.hit(from, to);
@@ -33,5 +36,10 @@ public class ElementSpellDecorator extends SpellDecorator {
 		}
 
 		to.receiveDamage((int) dmg, element);
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " with " + element;
 	}
 }

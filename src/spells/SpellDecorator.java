@@ -2,7 +2,7 @@ package spells;
 
 import entities.Character;
 
-public class SpellDecorator extends Spell {
+public abstract class SpellDecorator extends Spell {
 	private Spell spell;
 
 	public SpellDecorator(Spell spell) {
@@ -23,5 +23,10 @@ public class SpellDecorator extends Spell {
 	@Override
 	public int getManaCost() {
 		return spell.getManaCost();
+	}
+
+	@Override
+	public String toString() {
+		return spell + " is decorated";
 	}
 }

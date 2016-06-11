@@ -18,6 +18,7 @@ public class ConcreteSpell extends Spell {
 	@Override
 	public void hit(Character from, Character to) {
 		to.receiveDamage(damage);
+		from.removeMana(getManaCost());
 	}
 
 	/**

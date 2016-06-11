@@ -1,6 +1,9 @@
 import entities.Monster;
 import entities.Player;
-import spells.*;
+import spells.ConcreteSpell;
+import spells.Element;
+import spells.ElementSpellDecorator;
+import spells.Spell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +24,11 @@ public class Ma {
 		running = true;
 	}
 
+	public static void main(String[] args) {
+		Ma game = new Ma();
+		game.start();
+	}
+
 	public void start() {
 		Monster monster = generateMonster();
 		System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
@@ -38,38 +46,36 @@ public class Ma {
 	}
 
 	private boolean readCommand() {
+		System.out.print("> ");
 		String input = scanner.nextLine();
 		try {
-			ArrayList<Command> commands = Arrays.stream(input.split(" ")).map(Command::valueOf).collect(Collectors.toCollection(ArrayList<Command>::new));
-
-				switch (commands.get(0)){
-
-					case menu:
-						printMenu();
+			ArrayList<Command> commands = Arrays.stream(input.split(" "))
+			                                    .map(Command::valueOf)
+			                                    .collect(Collectors.toCollection(ArrayList<Command>::new));
+			switch (commands.get(0)) {
+				case menu:
+					printMenu();
+					return true;
+				case quit:
+					stop();
+					return true;
+				case help:
+					if (commands.size() == 2) {
+						System.out.println(commands.get(1).helpText);
 						return true;
-
-					case quit:
-						stop();
-						return true;
-
-					case help:
-						if (commands.size() == 2)
-						{
-							System.out.println(commands.get(1).helpText);
-							return true;
-						}
-						else {
-							System.out.println("help command should be followed by another command\n Please retry!");
-							return false;
-						}
-
-					default:
-						Spell spell = new ConcreteSpell(10, 10);
-						for (Command c : commands) {
-							spell = new ElementSpellDecorator(spell, c.element);
-						}
-				}
-		} catch (IllegalArgumentException e){
+					} else {
+						System.out.println("help command should be followed by another command\n Please retry!");
+						return false;
+					}
+				default:
+					Spell spell = new ConcreteSpell(10, 10);
+					for (Command c : commands) {
+						spell = new ElementSpellDecorator(spell, c.element);
+					}
+					System.out.println(spell);
+					break;
+			}
+		} catch (IllegalArgumentException e) {
 			System.out.println("Command not recognized");
 		}
 		return false;
@@ -81,14 +87,9 @@ public class Ma {
 
 	public void printMenu() {
 		System.out.println("Commands:");
-		for (Command c: Command.values()) {
+		for (Command c : Command.values()) {
 			System.out.printf("%s: %s\n", c.name(), c.description);
 		}
-	}
-
-	public static void main(String[] args) {
-		Ma game = new Ma();
-		game.start();
 	}
 
 
@@ -100,15 +101,17 @@ public class Ma {
 		thunder("Throw a thunder spell", "Thunder help", Element.THUNDER),
 		menu("Displays the menu ", ""),
 		help("Display the help. ex: 'help fire'", ""),
-		quit("Quit the Mā" ,"");
+		quit("Quit the Mā", "");
 		String description;
 		String helpText;
 		Element element;
+
 		Command(String description, String help) {
 			this.description = description;
 			this.helpText = help;
 		}
-		Command(String description, String help, Element element){
+
+		Command(String description, String help, Element element) {
 			this(description, help);
 			this.element = element;
 		}
