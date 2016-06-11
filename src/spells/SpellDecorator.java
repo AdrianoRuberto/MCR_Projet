@@ -5,8 +5,7 @@ import entities.Character;
 public class SpellDecorator extends Spell {
 	private Spell spell;
 
-	public SpellDecorator(Spell spell, Element element) {
-		super(element);
+	public SpellDecorator(Spell spell) {
 		this.spell = spell;
 	}
 

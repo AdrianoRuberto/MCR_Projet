@@ -1,8 +1,6 @@
 import entities.Monster;
 import entities.Player;
-import spells.SpellDecorator;
-import spells.Element;
-import spells.ConcreteSpell;
+import spells.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,15 +59,14 @@ public class Ma {
 							return true;
 						}
 						else {
-							System.out.println("help comand should be folloed by another command\n Please retry!");
+							System.out.println("help command should be followed by another command\n Please retry!");
 							return false;
 						}
 
 					default:
-						Spell spell = new ConcreteSpell(commands.get(0).element);
-
-						for (int i = 1; i < commands.size(); ++i){
-							spell = new SpellDecorator(concreteSpell, commands.get(i).element);
+						Spell spell = new ConcreteSpell(10, 10);
+						for (Command c : commands) {
+							spell = new ElementSpellDecorator(spell, c.element);
 						}
 				}
 		} catch (IllegalArgumentException e){

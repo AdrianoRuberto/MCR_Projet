@@ -40,6 +40,10 @@ public abstract class Character {
 
 	public void receiveDamage(int damage, Element element) {
 		last = element;
+		receiveDamage(damage);
+	}
+
+	public void receiveDamage(int damage) {
 		healthPoints -= damage;
 	}
 

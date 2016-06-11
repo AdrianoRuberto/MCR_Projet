@@ -2,11 +2,14 @@ package spells;
 
 import entities.Character;
 
-import java.util.Optional;
-
 public class ConcreteSpell extends Spell {
-	public ConcreteSpell(Element element) {
-		super(element);
+
+	private int damage;
+	private int manaCost;
+
+	public ConcreteSpell(int damage, int manaCost) {
+		this.damage = damage;
+		this.manaCost = manaCost;
 	}
 
 	/**
@@ -14,17 +17,7 @@ public class ConcreteSpell extends Spell {
 	 */
 	@Override
 	public void hit(Character from, Character to) {
-		Optional<Element> last = to.getLastElement();
-
-		double dmg = 10;
-		if (last.isPresent()) {
-			if (element.getStrong() == last.get())
-				dmg *= 1.5;
-			else if (element.getWeak() == last.get())
-				dmg *= 0.5;
-		}
-
-		to.receiveDamage((int) dmg, element);
+		to.receiveDamage(damage);
 	}
 
 	/**
@@ -32,6 +25,6 @@ public class ConcreteSpell extends Spell {
 	 */
 	@Override
 	public int getManaCost() {
-		return 10;
+		return manaCost;
 	}
 }

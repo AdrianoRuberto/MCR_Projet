@@ -9,11 +9,6 @@ import entities.Character;
  * @author Adriano Ruberto
  */
 public abstract class Spell {
-	public final Element element;
-
-	public Spell(Element element) {
-		this.element = element;
-	}
 
 	/**
 	 * Hits a character with this spell.
