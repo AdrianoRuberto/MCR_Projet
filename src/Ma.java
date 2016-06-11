@@ -13,6 +13,7 @@ public class Ma {
 	private Player player;
 	private boolean running;
 	private Scanner scanner;
+	private Spell spell;
 
 	public Ma() {
 		scanner = new Scanner(System.in);
@@ -24,11 +25,19 @@ public class Ma {
 	}
 
 	public void start() {
+		ArrayList<Command> commands;
+
+
 		Monster monster = generateMonster();
 		System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
-		printMenu();
-		while (!readCommand())
-			;
+
+		do{
+			printMenu();
+
+		} while (!executeCommand());
+
+		//Throws spell
+
 	}
 
 	public void stop() {
@@ -39,44 +48,78 @@ public class Ma {
 		return new Monster("Goblin", 1, 10, 2, 1);
 	}
 
-	private boolean readCommand() {
+	public boolean executeCommand(){
 		String input = scanner.nextLine();
-		try {
+		try
+		{
 			ArrayList<Command> commands = Arrays.stream(input.split(" ")).map(Command::valueOf).collect(Collectors.toCollection(ArrayList<Command>::new));
+			switch (commands.get(0))
+			{
 
-				switch (commands.get(0)){
+				case prepare:
+					if (commands.size() > 1)
+					{
+						spell = new Spell(commands.get(1).element);
 
-					case menu:
-						printMenu();
-						return true;
-
-					case quit:
-						stop();
-						return true;
-
-					case help:
-						if (commands.size() == 2)
+						for (int i = 2; i < commands.size(); ++i)
 						{
-							System.out.println(commands.get(1).helpText);
-							return true;
-						}
-						else {
-							System.out.println("help comand should be folloed by another command\n Please retry!");
-							return false;
-						}
-
-					default:
-						Spell spell = new Spell(commands.get(0).element);
-
-						for (int i = 1; i < commands.size(); ++i){
 							spell = new CombinedSpell(spell, commands.get(i).element);
 						}
-				}
+
+						System.out.println("You have successfully prepare a spell");
+						return false;
+					} else
+					{
+						System.out.println("Prepare spell command not valid, use help ");
+						return false;
+					}
+
+				case cast:
+					if (spell != null)
+					{
+						;//exec spell
+						return true;
+					} else
+					{
+						return false;
+					}
+
+				case menu:
+					printMenu();
+					return true;
+
+				case quit:
+					stop();
+					return true;
+
+				case help:
+					if (commands.size() == 2)
+					{
+						System.out.println(commands.get(1).helpText);
+						return true;
+					} else
+					{
+						System.out.println("help comand should be folloed by another command\n Please retry!");
+						return false;
+					}
+
+				default:
+
+					Spell spell = new Spell(commands.get(0).element);
+
+					for (int i = 1; i < commands.size(); ++i)
+					{
+						spell = new CombinedSpell(spell, commands.get(i).element);
+					}
+			}
 		} catch (IllegalArgumentException e){
-			System.out.println("Command not recognized");
+			System.out.println("Invalide comande");
 		}
-		return false;
+
+	return false;
 	}
+
+
 
 	public void printState() {
 		System.out.println(player);
@@ -101,6 +144,9 @@ public class Ma {
 		rock("Throw a rock spell", "Rock help", Element.ROCK),
 		leaf("Throw an leaf spell", "leaf help", Element.LEAF),
 		thunder("Throw a thunder spell", "Thunder help", Element.THUNDER),
+		prepare("Prepare a spell",""),
+		cast("Cast a prepared spell",""),
+		alter("Alter a spell", ""),
 		menu("Displays the menu ", ""),
 		help("Display the help. ex: 'help fire'", ""),
 		quit("Quit the Mā" ,"");
