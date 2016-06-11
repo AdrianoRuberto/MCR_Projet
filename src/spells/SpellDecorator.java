@@ -2,10 +2,10 @@ package spells;
 
 import entities.Character;
 
-public class CombinedSpell extends Spell {
+public class SpellDecorator extends Spell {
 	private Spell spell;
 
-	public CombinedSpell(Spell spell, Element element) {
+	public SpellDecorator(Spell spell, Element element) {
 		super(element);
 		this.spell = spell;
 	}
@@ -15,7 +15,6 @@ public class CombinedSpell extends Spell {
 	 */
 	@Override
 	public void hit(Character from, Character to) {
-		super.hit(from, to);
 		spell.hit(from, to);
 	}
 
@@ -24,6 +23,6 @@ public class CombinedSpell extends Spell {
 	 */
 	@Override
 	public int getManaCost() {
-		return super.getManaCost() + spell.getManaCost();
+		return spell.getManaCost();
 	}
 }

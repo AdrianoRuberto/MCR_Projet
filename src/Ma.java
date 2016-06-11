@@ -1,8 +1,8 @@
 import entities.Monster;
 import entities.Player;
-import spells.CombinedSpell;
+import spells.SpellDecorator;
 import spells.Element;
-import spells.Spell;
+import spells.ConcreteSpell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,10 +66,10 @@ public class Ma {
 						}
 
 					default:
-						Spell spell = new Spell(commands.get(0).element);
+						Spell spell = new ConcreteSpell(commands.get(0).element);
 
 						for (int i = 1; i < commands.size(); ++i){
-							spell = new CombinedSpell(spell, commands.get(i).element);
+							spell = new SpellDecorator(concreteSpell, commands.get(i).element);
 						}
 				}
 		} catch (IllegalArgumentException e){
