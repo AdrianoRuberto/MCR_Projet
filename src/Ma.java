@@ -83,11 +83,16 @@ public class Ma {
 				if (commands.size() > 1) {
 					commands.remove(0);
 					spell = new ConcreteSpell(10, 10);
-					for (Command command : commands) {
-						spell = new ElementSpellDecorator(spell, command.element);
+					try {
+						for (Command command : commands) {
+							spell = new ElementSpellDecorator(spell, command.element);
+						}
+						System.out.println("You have successfully prepare the spell : " + spell);
+						return true;
+					} catch (IllegalArgumentException e) {
+						System.out.println(e.getMessage());
+						return false;
 					}
-					System.out.println("You have successfully prepare the spell : " + spell);
-					return true;
 				}
 		}
 		System.out.println("Invalid command");
@@ -111,8 +116,13 @@ public class Ma {
 					final Element toFind = commands.get(1).element;
 					int pos = ((SpellDecorator) spell).getPos(spell, (s -> (s instanceof ElementSpellDecorator && (
 							(ElementSpellDecorator) s).getElement() == toFind)));
-					((SpellDecorator) spell).alter(pos, new ElementSpellDecorator(null, commands.get(2).element));
-					System.out.println("The new spell is : " + spell);
+					try {
+						((SpellDecorator) spell).alter(pos, new ElementSpellDecorator(null, commands.get(2).element));
+						System.out.println("The new spell is : " + spell);
+					} catch (IllegalArgumentException e) {
+						System.out.println(e.getMessage());
+						System.out.println("The spell is : " + spell);
+					}
 					return false;
 				}
 			case help:

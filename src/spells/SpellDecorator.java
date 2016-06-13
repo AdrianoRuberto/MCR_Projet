@@ -5,11 +5,19 @@ import entities.Character;
 import java.util.function.Predicate;
 
 public abstract class SpellDecorator implements Spell {
-	private Spell spell;
+	protected Spell spell;
 
 	public SpellDecorator(Spell spell) {
 		this.spell = spell;
 	}
+
+	/**
+	 * Gets if the spell is a valid spell for a specific decorator.
+	 *
+	 * @param spell the spell to test
+	 * @return true if it's valid, false if it's not
+	 */
+	public abstract boolean isValid(Spell spell);
 
 	/**
 	 * {@inheritDoc}
@@ -52,13 +60,9 @@ public abstract class SpellDecorator implements Spell {
 	}
 
 	/**
-	 * Adds a new decorator at the given position.
-	 *
-	 * @param pos    the position
-	 * @param newOne the new SpellDecorator
-	 * @return the spell with the added decorator
+	 * {@link #addAt(int, SpellDecorator)}
 	 */
-	public Spell addAt(int pos, SpellDecorator newOne) {
+	private Spell add_at(int pos, SpellDecorator newOne) throws IndexOutOfBoundsException {
 		if (pos < 0) throw new IndexOutOfBoundsException();
 
 		if (pos == 0) {
@@ -66,10 +70,29 @@ public abstract class SpellDecorator implements Spell {
 			spell = newOne;
 			return this;
 		} else if (spell instanceof SpellDecorator) {
-			spell = ((SpellDecorator) spell).addAt(pos - 1, newOne);
+			spell = ((SpellDecorator) spell).add_at(pos - 1, newOne);
 			return this;
 		} else {
 			throw new IndexOutOfBoundsException();
+		}
+	}
+
+	/**
+	 * Adds a new decorator at the given position.
+	 *
+	 * @param pos    the position
+	 * @param newOne the new SpellDecorator
+	 * @return the spell with the added decorator
+	 * @throws IndexOutOfBoundsException if the position is out of bounds
+	 * @throws IllegalArgumentException  if the decorator can't be added
+	 */
+	public Spell addAt(int pos, SpellDecorator newOne)
+			throws IllegalArgumentException, IndexOutOfBoundsException {
+		if (isValid(add_at(pos, newOne))) {
+			return this;
+		} else {
+			removeAt(pos + 1);
+			throw new IllegalArgumentException("Can't add the decorator!");
 		}
 	}
 
@@ -93,11 +116,9 @@ public abstract class SpellDecorator implements Spell {
 	 * @param spell     the spell
 	 * @param predicate the predicate
 	 * @return the position
-	 * @throws IndexOutOfBoundsException if the spell don't match the
-	 *                                   predicate
+	 * @throws IndexOutOfBoundsException if the spell don't match the predicate
 	 */
 	public int getPos(Spell spell, Predicate<SpellDecorator> predicate) throws IndexOutOfBoundsException {
-
 		int i = 0;
 		for (Spell tmp = spell; tmp instanceof SpellDecorator; ++i, tmp = ((SpellDecorator) tmp).spell) {
 			if (predicate.test((SpellDecorator) tmp)) {

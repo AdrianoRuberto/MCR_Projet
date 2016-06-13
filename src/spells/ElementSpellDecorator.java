@@ -2,6 +2,9 @@ package spells;
 
 import entities.Character;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Projet : MCR_Projet
  * Créé le 11.06.2016.
@@ -15,6 +18,8 @@ public class ElementSpellDecorator extends SpellDecorator {
 	public ElementSpellDecorator(Spell spell, Element element) {
 		super(spell);
 		this.element = element;
+		if (!isValid(spell))
+			throw new IllegalArgumentException("Can't add the decorator");
 	}
 
 	/**
@@ -23,6 +28,31 @@ public class ElementSpellDecorator extends SpellDecorator {
 	@Override
 	public int getManaCost() {
 		return 10 + super.getManaCost();
+	}
+
+	/**
+	 * A spell can only have 1 ElementSpellDecorator with the same element.
+	 * It's impossible to have 2 same element in the spell.
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isValid(Spell spell) {
+		Spell tmp = spell;
+		List<Element> elements = new LinkedList<>();
+		while (true) {
+			if (tmp instanceof ElementSpellDecorator) {
+				Element e = ((ElementSpellDecorator) tmp).element;
+				if (elements.contains(e))
+					return false;
+				elements.add(e);
+			}
+
+			if (tmp instanceof SpellDecorator) {
+				tmp = ((SpellDecorator) tmp).spell;
+			} else {
+				return true;
+			}
+		}
 	}
 
 	/**
