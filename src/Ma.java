@@ -1,10 +1,7 @@
 import entities.GearedMonster;
 import entities.Monster;
 import entities.Player;
-import spells.ConcreteSpell;
-import spells.Element;
-import spells.ElementSpellDecorator;
-import spells.Spell;
+import spells.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,12 +105,22 @@ public class Ma {
 		if (commands.isEmpty()) return false;
 		switch (commands.get(0)) {
 			case cast:
+				System.out.println("Casting " + spell + " on " + monster.getName());
 				spell.hit(player, monster);
 				return true;
 			case alter:
-				return false;
+				if (commands.size() == 3) {
+					final Element toFind = commands.get(1).element;
+					int pos = ((SpellDecorator) spell).getPos(spell, (s -> (s instanceof ElementSpellDecorator && (
+							(ElementSpellDecorator) s).getElement() == toFind)));
+					((SpellDecorator) spell).alter(pos, new ElementSpellDecorator(null, commands.get(2).element));
+					System.out.println("The new spell is : " + spell);
+					return false;
+				}
 			case help:
-				System.out.println(commands.get(1).helpText);
+				if (commands.size() == 2) {
+					System.out.println(commands.get(1).helpText);
+				}
 				return false;
 			case menu:
 				printMenu();
@@ -121,10 +128,10 @@ public class Ma {
 			case quit:
 				stop();
 				return true;
-			default:
-				System.out.println("Invalid command");
-				return false;
 		}
+
+		System.out.println("Invalid command");
+		return false;
 	}
 
 	/**

@@ -2,6 +2,8 @@ package spells;
 
 import entities.Character;
 
+import java.util.function.Predicate;
+
 public abstract class SpellDecorator implements Spell {
 	private Spell spell;
 
@@ -85,15 +87,23 @@ public abstract class SpellDecorator implements Spell {
 	}
 
 	/**
-	 * Counts the number of decorators
+	 * Gets the position in the spell of the decorator according of the
+	 * predicate.
 	 *
-	 * @return the number of decorators
+	 * @param spell     the spell
+	 * @param predicate the predicate
+	 * @return the position
+	 * @throws IndexOutOfBoundsException if the spell don't match the
+	 *                                   predicate
 	 */
-	public int nbDecorators() {
-		int nb = 1;
-		for (Spell tmp = spell; tmp instanceof SpellDecorator; tmp = ((SpellDecorator) tmp).spell) {
-			++nb;
+	public int getPos(Spell spell, Predicate<SpellDecorator> predicate) throws IndexOutOfBoundsException {
+
+		int i = 0;
+		for (Spell tmp = spell; tmp instanceof SpellDecorator; ++i, tmp = ((SpellDecorator) tmp).spell) {
+			if (predicate.test((SpellDecorator) tmp)) {
+				return i;
+			}
 		}
-		return nb;
+		throw new IndexOutOfBoundsException();
 	}
 }

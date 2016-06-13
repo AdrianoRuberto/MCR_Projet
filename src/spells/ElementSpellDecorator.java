@@ -2,8 +2,6 @@ package spells;
 
 import entities.Character;
 
-import java.util.Optional;
-
 /**
  * Projet : MCR_Projet
  * Créé le 11.06.2016.
@@ -39,5 +37,14 @@ public class ElementSpellDecorator extends SpellDecorator {
 	@Override
 	public String toString() {
 		return super.toString() + " with " + element;
+	}
+
+	/**
+	 * Gets the elements.
+	 *
+	 * @return the elements
+	 */
+	public Element getElement() {
+		return element;
 	}
 }
