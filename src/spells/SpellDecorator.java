@@ -60,6 +60,8 @@ public abstract class SpellDecorator implements Spell {
 	}
 
 	/**
+	 * Private function called by addAt, this function don't check if the spell
+	 * is valid.
 	 * {@link #addAt(int, SpellDecorator)}
 	 */
 	private Spell add_at(int pos, SpellDecorator newOne) throws IndexOutOfBoundsException {
