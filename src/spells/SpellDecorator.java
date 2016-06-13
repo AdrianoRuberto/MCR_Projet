@@ -50,9 +50,11 @@ public abstract class SpellDecorator implements Spell {
 	}
 
 	/**
-	 * @param pos
-	 * @param newOne
-	 * @return
+	 * Adds a new decorator at the given position.
+	 *
+	 * @param pos    the position
+	 * @param newOne the new SpellDecorator
+	 * @return the spell with the added decorator
 	 */
 	public Spell addAt(int pos, SpellDecorator newOne) {
 		if (pos < 0) throw new IndexOutOfBoundsException();
@@ -69,6 +71,14 @@ public abstract class SpellDecorator implements Spell {
 		}
 	}
 
+	/**
+	 * Alters the spell by first add the new spell and then
+	 * remove the altered spell.
+	 *
+	 * @param pos    the position
+	 * @param newOne the new SpellDecorator
+	 * @return the spell with the altered spell
+	 */
 	public Spell alter(int pos, SpellDecorator newOne) {
 		addAt(pos, newOne);
 		return removeAt(pos);

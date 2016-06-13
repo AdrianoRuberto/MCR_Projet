@@ -67,7 +67,7 @@ public class Ma {
 	 * @return true if the first phase is finished
 	 */
 	public boolean firstPhase() {
-		List<Command> commands = parse(scanner.nextLine());
+		List<Command> commands = Command.parse(scanner.nextLine());
 
 		switch (commands.get(0)) {
 			case help:
@@ -104,7 +104,7 @@ public class Ma {
 	 * @return true if the second phase is finished
 	 */
 	private boolean secondPhase(Monster monster) {
-		List<Command> commands = parse(scanner.nextLine());
+		List<Command> commands = Command.parse(scanner.nextLine());
 		switch (commands.get(0)) {
 			case cast:
 				spell.hit(player, monster);
@@ -127,23 +127,6 @@ public class Ma {
 	}
 
 	/**
-	 * Parses a given input into commands.
-	 *
-	 * @param input the input
-	 * @return a list of command
-	 */
-	public List<Command> parse(String input) {
-		try {
-			return Arrays.stream(input.split(" "))
-			             .map(Command::valueOf)
-			             .collect(Collectors.toCollection(ArrayList<Command>::new));
-		} catch (IllegalArgumentException e) {
-			System.out.println("The command doesn't exist");
-			throw e;
-		}
-	}
-
-	/**
 	 * Stop the game
 	 */
 	public void stop() {
@@ -161,6 +144,9 @@ public class Ma {
 		}
 	}
 
+	/**
+	 * All the supported commands
+	 */
 	private enum Command {
 		fire("Throw a fire spell", "Fire help", Element.FIRE),
 		water("Throw a water spell", "Water help", Element.WATER),
@@ -185,6 +171,23 @@ public class Ma {
 		Command(String description, String help, Element element) {
 			this(description, help);
 			this.element = element;
+		}
+
+		/**
+		 * Parses a given input into commands.
+		 *
+		 * @param input the input
+		 * @return a list of command
+		 */
+		public static List<Command> parse(String input) {
+			try {
+				return Arrays.stream(input.split(" "))
+				             .map(Command::valueOf)
+				             .collect(Collectors.toCollection(ArrayList<Command>::new));
+			} catch (IllegalArgumentException e) {
+				System.out.println("The command doesn't exist");
+				throw e;
+			}
 		}
 	}
 
