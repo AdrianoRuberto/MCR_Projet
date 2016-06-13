@@ -1,6 +1,6 @@
 package entities;
 
-public class GearedMonster extends Monster {
+public class GearedMonster extends MonsterDecorator {
 	private Monster monster;
 	private Item item;
 
@@ -8,7 +8,8 @@ public class GearedMonster extends Monster {
 		super(
 				m.name,
 				m.level,
-				i.modifyHealthPoints(m.healthPoints)
+				i.modifyHealthPoints(m.healthPoints),
+				m
 		);
 
 		if (m.equippedWeapons() + i.handsNeeded() > maxEquippedWeapons()) {
