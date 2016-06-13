@@ -31,7 +31,7 @@ public class Ma {
 		List<Command> commands;
 		printMenu();
 		while (true) {
-			Monster monster = GearedMonster.generateGearedMonster(player.level());
+			Monster monster = GearedMonster.generateGearedMonster(player.getLevel());
 			System.out.printf("A wild %s appears ! What are you going to do ?\n", monster);
 
 			while (monster.isAlive()) {
@@ -69,8 +69,10 @@ public class Ma {
 
 		switch (commands.get(0)) {
 			case help:
-				System.out.println(commands.get(1).helpText);
-				return false;
+				if (commands.size() == 2) {
+					System.out.println(commands.get(1).helpText);
+					return false;
+				}
 			case menu:
 				printMenu();
 				return false;
@@ -86,14 +88,10 @@ public class Ma {
 					}
 					System.out.println("You have successfully prepare the spell : " + spell);
 					return true;
-				} else {
-					System.out.println("Prepare spell command not valid, use help ");
-					return false;
 				}
-			default:
-				System.out.println("Invalid command");
-				return false;
 		}
+		System.out.println("Invalid command");
+		return false;
 	}
 
 	/**

@@ -40,14 +40,14 @@ public class ConcreteMonster extends Monster {
 	}
 
 	/**
-	 * Gives a random monster that it at a level near the given level
-	 * @param level a level near the monster's level. Typically the player's level.
+	 * Gives a random monster that it at a getLevel near the given getLevel
+	 * @param level a getLevel near the monster's getLevel. Typically the player's getLevel.
 	 * @return A random monster
 	 */
 	public static Monster generateConcreteMonster(int level) {
 		Random r = new Random();
 		MonsterType type = MonsterType.values()[r.nextInt(MonsterType.values().length)];
-		int monsterLevel = Math.max(1, level + (r.nextInt(2) - 1)); // player level ± 0,1
+		int monsterLevel = Math.max(1, level + (r.nextInt(2) - 1)); // player getLevel ± 0,1
 		int hp = (int) (type.baseHP + (level) % (double) type.baseHP);
 		int baseDamage = type.baseDamage + r.nextInt(monsterLevel);
 		int rngDamage = Math.max(2, r.nextInt(type.baseDamage));

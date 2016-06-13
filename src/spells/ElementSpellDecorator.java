@@ -21,6 +21,14 @@ public class ElementSpellDecorator extends SpellDecorator {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public int getManaCost() {
+		return 10 + super.getManaCost();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void hit(Character from, Character to) {
 		super.hit(from, to);
 		Element elem = to.getElementType();

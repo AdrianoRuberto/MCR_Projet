@@ -17,7 +17,7 @@ public class Player extends Character {
 	 *
 	 * @return the level of the player
 	 */
-	public int level() {
+	public int getLevel() {
 		return level;
 	}
 }

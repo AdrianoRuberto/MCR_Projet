@@ -14,7 +14,7 @@ public abstract class Monster extends Character {
 	/**
 	 * Monster constructor
 	 * @param name The monster's name
-	 * @param level Its level
+	 * @param level Its getLevel
 	 * @param healthPoints Its full health points
 	 */
 	public Monster(String name, int level, int healthPoints, Element elem) {
