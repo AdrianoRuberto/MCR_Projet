@@ -31,7 +31,6 @@ public class Ma {
 	}
 
 	public void start() {
-
 		List<Command> commands;
 		printMenu();
 		while (true) {
@@ -70,6 +69,7 @@ public class Ma {
 	 */
 	public boolean firstPhase(List<Command> commands) {
 		if (commands.isEmpty()) return false;
+
 		switch (commands.get(0)) {
 			case help:
 				System.out.println(commands.get(1).helpText);
@@ -149,17 +149,17 @@ public class Ma {
 	 * All the supported commands
 	 */
 	private enum Command {
-		fire("Throw a fire spell", "Fire help", Element.FIRE),
-		water("Throw a water spell", "Water help", Element.WATER),
-		rock("Throw a rock spell", "Rock help", Element.ROCK),
-		leaf("Throw a leaf spell", "leaf help", Element.LEAF),
-		thunder("Throw a thunder spell", "Thunder help", Element.THUNDER),
-		prepare("Prepare a spell", ""),
-		cast("Cast a prepared spell", ""),
-		alter("Alter a spell", ""),
-		menu("Displays the menu ", ""),
-		help("Display the help. ex: 'help fire'", ""),
-		quit("Quit the Mā", "");
+		fire(Element.FIRE),
+		water(Element.WATER),
+		thunder(Element.THUNDER),
+		rock(Element.ROCK),
+		leaf(Element.LEAF),
+		prepare("Prepare a spell", "ex: 'prepare fire thunder rock'"),
+		cast("Cast a prepared spell", "ex: 'cast'"),
+		alter("Alter a spell", "ex: 'alter [src] [dst]'"),
+		menu("Displays the menu", "ex: 'menu'"),
+		help("Displays the help for a command", "ex: 'help fire'"),
+		quit("Quit Mā", "");
 		String description;
 		String helpText;
 		Element element;
@@ -169,8 +169,8 @@ public class Ma {
 			this.helpText = help;
 		}
 
-		Command(String description, String help, Element element) {
-			this(description, help);
+		Command(Element element) {
+			this("The " + element + " element", "Strong against " + element.getStrong() + ", weak against " + element.getWeak());
 			this.element = element;
 		}
 
