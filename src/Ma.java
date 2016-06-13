@@ -1,4 +1,3 @@
-import entities.ConcreteMonster;
 import entities.GearedMonster;
 import entities.Monster;
 import entities.Player;
@@ -9,6 +8,7 @@ import spells.Spell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -33,90 +33,133 @@ public class Ma {
 	}
 
 	public void start() {
-		Monster monster = GearedMonster.generateGearedMonster(player.level());
-		System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
+		printMenu();
+		while (running) {
+			Monster monster = GearedMonster.generateGearedMonster(player.level());
+			System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
+			while (monster.isAlive()) {
+				do {
+					System.out.print("> ");
+				} while (!firstPhase());
 
-		do {
-			printMenu();
+				if (!running)
+					break;
 
-		} while (!executeCommand());
-
-		//Throws spell
-
+				do {
+					System.out.print("> ");
+				} while (!secondPhase(monster));
+				// Monster play
+				if (monster.isAlive())
+					player.receiveDamage(monster.hit());
+			}
+			System.out.println("You killed " + monster.getName());
+		}
 	}
 
+	/**
+	 * First phase of the fight.
+	 * The player can use commands :
+	 * - help
+	 * - quit
+	 * - menu
+	 * - prepare
+	 *
+	 * @return true if the first phase is finished
+	 */
+	public boolean firstPhase() {
+		List<Command> commands = parse(scanner.nextLine());
+
+		switch (commands.get(0)) {
+			case help:
+				System.out.println(commands.get(1).helpText);
+				return false;
+			case menu:
+				printMenu();
+				return false;
+			case quit:
+				stop();
+				return true;
+			case prepare:
+				if (commands.size() > 1) {
+					commands.remove(0);
+					spell = new ConcreteSpell(10, 10);
+					for (Command command : commands) {
+						spell = new ElementSpellDecorator(spell, command.element);
+					}
+					System.out.println("You have successfully prepare a spell");
+					return true;
+				} else {
+					System.out.println("Prepare spell command not valid, use help ");
+					return false;
+				}
+			default:
+				System.out.println("Invalid command");
+				return false;
+		}
+	}
+
+	/**
+	 * The second phase of the fight.
+	 *
+	 * @return true if the second phase is finished
+	 */
+	private boolean secondPhase(Monster monster) {
+		List<Command> commands = parse(scanner.nextLine());
+		switch (commands.get(0)) {
+			case cast:
+				spell.hit(player, monster);
+				return true;
+			case alter:
+				return false;
+			case help:
+				System.out.println(commands.get(1).helpText);
+				return false;
+			case menu:
+				printMenu();
+				return false;
+			case quit:
+				stop();
+				return true;
+			default:
+				System.out.println("Invalid command");
+				return false;
+		}
+	}
+
+	/**
+	 * Parses a given input into commands.
+	 *
+	 * @param input the input
+	 * @return a list of command
+	 */
+	public List<Command> parse(String input) {
+		try {
+			return Arrays.stream(input.split(" "))
+			             .map(Command::valueOf)
+			             .collect(Collectors.toCollection(ArrayList<Command>::new));
+		} catch (IllegalArgumentException e) {
+			System.out.println("The command doesn't exist");
+			throw e;
+		}
+	}
+
+	/**
+	 * Stop the game
+	 */
 	public void stop() {
+		System.out.println("Bye bye");
 		running = false;
 	}
 
-	private ConcreteMonster generateMonster() {
-		return new ConcreteMonster("Goblin", 1, 10, 2, 1);
-	}
-
-	public boolean executeCommand() {
-		String input = scanner.nextLine();
-		try {
-			ArrayList<Command> commands = Arrays.stream(input.split(" ")).map(Command::valueOf).collect(Collectors.toCollection(ArrayList<Command>::new));
-			switch (commands.get(0)) {
-
-				case prepare:
-					if (commands.size() > 1) {
-						spell = new ConcreteSpell(10, 10);
-						for (Command command : commands) {
-							spell = new ElementSpellDecorator(spell, command.element);
-						}
-
-						System.out.println("You have successfully prepare a spell");
-						return false;
-					} else {
-						System.out.println("Prepare spell command not valid, use help ");
-						return false;
-					}
-
-				case cast:
-					if (spell != null) {
-						;//exec spell
-						return true;
-					} else {
-						return false;
-					}
-
-				case menu:
-					printMenu();
-					return true;
-
-				case quit:
-					stop();
-					return true;
-
-				case help:
-					if (commands.size() == 2) {
-						System.out.println(commands.get(1).helpText);
-						return true;
-					} else {
-						System.out.println("help comand should be folloed by another command\n Please retry!");
-						return false;
-					}
-			}
-		} catch (IllegalArgumentException e) {
-			System.out.println("Invalide comande");
-		}
-
-		return false;
-	}
-
-
-	public void printState() {
-		System.out.println(player);
-	}
-
+	/**
+	 * Print the menu
+	 */
 	public void printMenu() {
 		System.out.println("Commands:");
 		for (Command c : Command.values()) {
 			System.out.printf("%s: %s\n", c.name(), c.description);
 		}
 	}
-
 
 	private enum Command {
 		fire("Throw a fire spell", "Fire help", Element.FIRE),

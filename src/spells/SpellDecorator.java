@@ -49,19 +49,29 @@ public abstract class SpellDecorator implements Spell {
 		}
 	}
 
-	public Spell addAt(int pos, SpellDecorator toAdd) {
+	/**
+	 * @param pos
+	 * @param newOne
+	 * @return
+	 */
+	public Spell addAt(int pos, SpellDecorator newOne) {
 		if (pos < 0) throw new IndexOutOfBoundsException();
 
 		if (pos == 0) {
-			toAdd.spell = spell;
-			spell = toAdd;
+			newOne.spell = spell;
+			spell = newOne;
 			return this;
 		} else if (spell instanceof SpellDecorator) {
-			spell = ((SpellDecorator) spell).addAt(pos - 1, toAdd);
+			spell = ((SpellDecorator) spell).addAt(pos - 1, newOne);
 			return this;
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
+	}
+
+	public Spell alter(int pos, SpellDecorator newOne) {
+		addAt(pos, newOne);
+		return removeAt(pos);
 	}
 
 	/**

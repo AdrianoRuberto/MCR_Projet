@@ -45,6 +45,7 @@ public abstract class Character {
 
 	public void receiveDamage(int damage) {
 		healthPoints -= damage;
+		System.out.println(name + " is hit (" + damage + "), " + healthPoints + " remaining");
 	}
 
 	public Optional<Element> getLastElement() {
