@@ -23,19 +23,19 @@ public class ConcreteMonster extends Monster {
 
 	@Override
 	public int minHit() {
-		return (int) (avgDamage - rngDamage/2.0);
+		return (int) (avgDamage - rngDamage / 2.0);
 	}
 
 	@Override
 	public int maxHit() {
-		return (int) (avgDamage + rngDamage/2.0);
+		return (int) (avgDamage + rngDamage / 2.0);
 	}
 
 	public static Monster generateConcreteMonster(int level) { // TODO: replace magic values by constants
 		Random r = new Random();
 		MonsterType type = MonsterType.values()[r.nextInt(MonsterType.values().length)];
-		int monsterLevel = Math.max(1, level+(r.nextInt(2)-1)); // player level ± 1
-		int hp = (int) (type.baseHP + (level)%(double)type.baseHP);
+		int monsterLevel = Math.max(1, level + (r.nextInt(2) - 1)); // player level ± 1
+		int hp = (int) (type.baseHP + (level) % (double) type.baseHP);
 		int baseDamage = type.baseDamage + r.nextInt(monsterLevel);
 		int rngDamage = Math.max(2, r.nextInt(type.baseDamage));
 		return new ConcreteMonster(type.name, monsterLevel, hp, baseDamage, rngDamage);
@@ -88,8 +88,7 @@ public class ConcreteMonster extends Monster {
 		succube("Succube", Element.FIRE, "succube.ascii"),
 		tertre_errant("Tertre errant", Element.LEAF, "elementaire_plante.ascii"),
 		vampire("Vampire", Element.NORMAL, "vampire.ascii"),
-		zombie("Zombie", Element.NORMAL, "zombie.ascii")
-		;
+		zombie("Zombie", Element.NORMAL, "zombie.ascii");
 
 		private final int baseHP;
 		private final String name;
@@ -98,7 +97,6 @@ public class ConcreteMonster extends Monster {
 		private String sprite;
 
 		public static final String spritesPath = "sprites";
-
 
 
 		MonsterType(String name, Element elem, String spritePath) {
@@ -110,9 +108,10 @@ public class ConcreteMonster extends Monster {
 				sprite = fileReader.lines().collect(Collectors.joining("\n"));
 			} catch (FileNotFoundException e) {
 				System.out.println("Could not find the sprite ascii image while searching in this path:");
-				System.out.println(spritesPath +"/"+spritePath);
+				System.out.println(spritesPath + "/" + spritePath);
 			}
 		}
+
 		MonsterType(String name, Element elem, int baseHP, int baseDamage) {
 			this.name = name;
 			this.elem = elem;
@@ -120,16 +119,16 @@ public class ConcreteMonster extends Monster {
 			this.baseDamage = baseDamage;
 		}
 
-		public String sprite(){
+		public String sprite() {
 			return sprite;
 		}
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int i = 0;
-		while (!Objects.equals(s.next(), "stop")){
-			MonsterType m = MonsterType.values()[i++%MonsterType.values().length];
+		while (!Objects.equals(s.next(), "stop")) {
+			MonsterType m = MonsterType.values()[i++ % MonsterType.values().length];
 			System.out.println(m.sprite);
 			System.out.println(m.name);
 
