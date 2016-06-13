@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Ma {
+	private final int manaCost = 1;
 	private Player player;
 	private Scanner scanner;
 	private Spell spell;
@@ -19,7 +20,8 @@ public class Ma {
 		scanner = new Scanner(System.in);
 		try {
 			System.out.println(TerminalUtils.colorize(AsciiImages.parseAscii("sprites/sorcier.ascii"), TerminalUtils.Colors.DARKBLUE));
-		} catch (FileNotFoundException ignored) { }
+		} catch (FileNotFoundException ignored) {
+		}
 		System.out.println("Welcome to Mā ! You will fight against evil monsters using your powerful magics !");
 		System.out.print("Enter your magician name: ");
 		String name = scanner.nextLine();
@@ -40,15 +42,24 @@ public class Ma {
 		List<Command> commands;
 		printMenu();
 		while (true) {
-			Thread.sleep(random.nextInt(5000) + 3000);
 			Monster monster = GearedMonster.generateGearedMonster(player.getLevel());
 			System.out.printf("%s appears ! What are you going to do ?\n", monster);
 
 			while (monster.isAlive()) {
-				do {
-					System.out.print("> ");
-					commands = Command.parse(scanner.nextLine());
-				} while (!firstPhase(commands));
+
+				while (!firstPhase(commands = Command.parse(scanner.nextLine()))) {
+					if (!commands.isEmpty() && commands.get(0) == Command.rest) {
+						player.receiveDamage(monster.hit());
+
+						if (!player.isAlive()) {
+							System.out.println("YOU DIED");
+							stop();
+						}
+					}
+				}
+
+				player.setMana(player.getMana() - spell.getManaCost());
+				System.out.println(player.status());
 
 				do {
 					System.out.print("> ");
@@ -58,10 +69,16 @@ public class Ma {
 				// Monster play
 				if (monster.isAlive())
 					player.receiveDamage(monster.hit());
+
+				if (!player.isAlive()) {
+					System.out.println("YOU DIED");
+					stop();
+				}
 			}
-			
+
 			System.out.println("You killed the " + monster.getName());
 			player.levelUp();
+			Thread.sleep(random.nextInt(5000) + 3000);
 		}
 	}
 
@@ -84,6 +101,7 @@ public class Ma {
 					System.out.println(commands.get(1).helpText);
 					return false;
 				}
+				break;
 			case menu:
 				printMenu();
 				return false;
@@ -93,18 +111,32 @@ public class Ma {
 			case prepare:
 				if (commands.size() > 1) {
 					commands.remove(0);
-					spell = new ConcreteSpell(10, 10);
+					spell = new ConcreteSpell(10, manaCost);
 					try {
 						for (Command command : commands) {
-							spell = new ElementSpellDecorator(spell, command.element);
+							spell = new ElementSpellDecorator(spell, command.element, manaCost);
 						}
-						System.out.println("You have successfully prepare the spell : " + spell);
-						return true;
+						if (spell.getManaCost() > player.getMana()) {
+							System.out.println("You don't have enough mana for casting "
+									                   + spell + "(" + spell.getManaCost() + ")");
+							return false;
+						} else {
+							System.out.println("You have successfully prepare the spell : "
+									                   + spell + " (" + spell.getManaCost() + ")");
+							return true;
+						}
 					} catch (IllegalArgumentException e) {
 						System.out.println(e.getMessage());
 						return false;
 					}
 				}
+				break;
+			case rest:
+				System.out.println("You decide to rest");
+				player.setMana(Math.min(player.getMana() + manaCost * 3, player.getMaxMana()));
+				player.setHealthPoints(Math.min(player.getHealthPoints() + player.getLevel(), player.getMaxHealthPoints()));
+				System.out.println(player.status());
+				return false;
 		}
 		System.out.println("Invalid command");
 		return false;
@@ -134,13 +166,14 @@ public class Ma {
 					int pos = ((SpellDecorator) spell).getPos(spell, (s -> (s instanceof ElementSpellDecorator && (
 							(ElementSpellDecorator) s).getElement() == toFind)));
 					try {
-						((SpellDecorator) spell).alter(pos, new ElementSpellDecorator(null, commands.get(2).element));
+						((SpellDecorator) spell).alter(pos, new ElementSpellDecorator(null, commands.get(2).element, manaCost));
 					} catch (IllegalArgumentException e) {
 						System.out.println(e.getMessage());
 					}
-					System.out.println("The spell is : " + spell);
+					System.out.println("The spell is : " + spell + " mana : " + spell.getManaCost());
 					return false;
 				}
+				break;
 			case help:
 				if (commands.size() == 2) {
 					System.out.println(commands.get(1).helpText);
@@ -185,6 +218,7 @@ public class Ma {
 		thunder(Element.THUNDER),
 		rock(Element.ROCK),
 		leaf(Element.LEAF),
+		rest("Recover to gain mana", "ex: 'rest'"),
 		prepare("Prepare a spell", "ex: 'prepare fire thunder rock'"),
 		cast("Cast a prepared spell", "ex: 'cast'"),
 		alter("Alter a spell", "ex: 'alter [src] [dst]'"),

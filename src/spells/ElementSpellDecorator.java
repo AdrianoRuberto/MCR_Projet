@@ -14,12 +14,14 @@ import java.util.List;
 public class ElementSpellDecorator extends SpellDecorator {
 
 	private final Element element;
+	private final int manaCost;
 
-	public ElementSpellDecorator(Spell spell, Element element) {
+	public ElementSpellDecorator(Spell spell, Element element, int manaCost) {
 		super(spell);
-		this.element = element;
 		if (!isValid(this))
 			throw new IllegalArgumentException("[ERROR] The spell " + spell + " can't add " + element);
+		this.element = element;
+		this.manaCost = manaCost;
 	}
 
 	/**
@@ -27,7 +29,7 @@ public class ElementSpellDecorator extends SpellDecorator {
 	 */
 	@Override
 	public int getManaCost() {
-		return 10 + super.getManaCost();
+		return manaCost + super.getManaCost();
 	}
 
 	/**

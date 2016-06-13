@@ -23,6 +23,9 @@ public class Player extends Character {
 		return level;
 	}
 
+	/**
+	 * Level up the player
+	 */
 	public void levelUp() {
 		level += 1;
 		healthPoints += 2;
@@ -30,6 +33,16 @@ public class Player extends Character {
 		mana += 1;
 		maxMana += 1;
 		System.out.printf("You've gained a level ! You are now level %d !\n", level);
-		System.out.printf("You now have %s hp and %s mana\n", healthPoints+"/"+maxHealthPoints, mana+"/"+maxMana);
+		System.out.printf(status());
+	}
+
+	/**
+	 * Gets a string representation of the player's status :
+	 * hp [cur]/[max] | mana [cur]/[max]
+	 *
+	 * @return the string representation of the player's status
+	 */
+	public String status() {
+		return String.format("hp %s | mana %s", healthPoints + "/" + maxHealthPoints, mana + "/" + maxMana);
 	}
 }

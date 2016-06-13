@@ -7,16 +7,17 @@ import spells.Element;
  */
 public abstract class Character {
 	protected final String name;
+	private final Element typeElement;
 	protected int level;
 	protected int healthPoints;
 	protected int maxHealthPoints;
 	protected int mana, maxMana;
-	private final Element typeElement;
 
 	/**
 	 * Character constructor
-	 * @param name The character's name
-	 * @param level The character's level
+	 *
+	 * @param name         The character's name
+	 * @param level        The character's level
 	 * @param healthPoints The character's health points
 	 */
 	public Character(String name, int level, int healthPoints, int manaPoints, Element element) {
@@ -49,7 +50,17 @@ public abstract class Character {
 	}
 
 	/**
+	 * Mana getter
+	 *
+	 * @return the mana status
+	 */
+	public int getMana() {
+		return mana;
+	}
+
+	/**
 	 * Sets the mana value
+	 *
 	 * @param mana the new amount of mana
 	 */
 	public void setMana(int mana) {
@@ -60,14 +71,6 @@ public abstract class Character {
 		this.mana = mana;
 	}
 
-	/**
-	 * Mana getter
-	 * @return the mana status
-	 */
-	public int getMana() {
-		return mana;
-	}
-
 	public int getMaxMana() {
 		return maxMana;
 	}
@@ -76,19 +79,24 @@ public abstract class Character {
 		return healthPoints;
 	}
 
+	public void setHealthPoints(int hp) {
+		this.healthPoints = hp;
+	}
+
 	public int getMaxHealthPoints() {
 		return maxHealthPoints;
 	}
 
 	/**
 	 * Gives damage to the character
+	 *
 	 * @param damage the damage amount received
 	 */
 	public void receiveDamage(int damage) {
 		healthPoints -= damage;
 		System.out.println(name + " is hit (" + damage + "dmg), " + healthPoints + " hp remaining");
 	}
-	
+
 	/**
 	 * @return the element type of the monster
 	 */
