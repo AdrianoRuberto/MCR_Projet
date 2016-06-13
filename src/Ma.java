@@ -40,7 +40,7 @@ public class Ma {
 		List<Command> commands;
 		printMenu();
 		while (true) {
-			Thread.sleep(random.nextInt(3000) + 1000);
+			Thread.sleep(random.nextInt(5000) + 3000);
 			Monster monster = GearedMonster.generateGearedMonster(player.getLevel());
 			System.out.printf("%s appears ! What are you going to do ?\n", monster);
 
@@ -59,8 +59,9 @@ public class Ma {
 				if (monster.isAlive())
 					player.receiveDamage(monster.hit());
 			}
-
+			
 			System.out.println("You killed the " + monster.getName());
+			player.levelUp();
 		}
 	}
 

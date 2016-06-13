@@ -158,7 +158,7 @@ public class ConcreteMonster extends Monster {
 		 * @param spritePath the ascii sprite
 		 */
 		MonsterType(String name, Element elem, String spritePath, int nbHands) {
-			this(name, 10, 5, elem, spritePath, nbHands);
+			this(name, 40, 5, elem, spritePath, nbHands);
 		}
 
 	}
