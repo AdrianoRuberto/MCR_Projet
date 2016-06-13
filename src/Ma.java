@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 public class Ma {
 	private Player player;
-	private boolean running;
 	private Scanner scanner;
 	private Spell spell;
 
@@ -24,7 +23,6 @@ public class Ma {
 		System.out.print("Enter your magician name: ");
 		String name = scanner.nextLine();
 		player = new Player(name);
-		running = true;
 	}
 
 	public static void main(String[] args) {
@@ -33,25 +31,29 @@ public class Ma {
 	}
 
 	public void start() {
+
+		List<Command> commands;
 		printMenu();
-		while (running) {
+		while (true) {
 			Monster monster = GearedMonster.generateGearedMonster(player.level());
-			System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
+			System.out.printf("A wild %s appears ! What are you going to do ?\n", monster);
+
 			while (monster.isAlive()) {
 				do {
 					System.out.print("> ");
-				} while (!firstPhase());
-
-				if (!running)
-					break;
+					commands = Command.parse(scanner.nextLine());
+				} while (!firstPhase(commands));
 
 				do {
 					System.out.print("> ");
-				} while (!secondPhase(monster));
+					commands = Command.parse(scanner.nextLine());
+				} while (!secondPhase(monster, commands));
+
 				// Monster play
 				if (monster.isAlive())
 					player.receiveDamage(monster.hit());
 			}
+
 			System.out.println("You killed " + monster.getName());
 		}
 	}
@@ -66,9 +68,8 @@ public class Ma {
 	 *
 	 * @return true if the first phase is finished
 	 */
-	public boolean firstPhase() {
-		List<Command> commands = Command.parse(scanner.nextLine());
-
+	public boolean firstPhase(List<Command> commands) {
+		if (commands.isEmpty()) return false;
 		switch (commands.get(0)) {
 			case help:
 				System.out.println(commands.get(1).helpText);
@@ -86,7 +87,7 @@ public class Ma {
 					for (Command command : commands) {
 						spell = new ElementSpellDecorator(spell, command.element);
 					}
-					System.out.println("You have successfully prepare a spell");
+					System.out.println("You have successfully prepare the spell : " + spell);
 					return true;
 				} else {
 					System.out.println("Prepare spell command not valid, use help ");
@@ -103,8 +104,8 @@ public class Ma {
 	 *
 	 * @return true if the second phase is finished
 	 */
-	private boolean secondPhase(Monster monster) {
-		List<Command> commands = Command.parse(scanner.nextLine());
+	private boolean secondPhase(Monster monster, List<Command> commands) {
+		if (commands.isEmpty()) return false;
 		switch (commands.get(0)) {
 			case cast:
 				spell.hit(player, monster);
@@ -131,7 +132,7 @@ public class Ma {
 	 */
 	public void stop() {
 		System.out.println("Bye bye");
-		running = false;
+		System.exit(0);
 	}
 
 	/**
@@ -186,9 +187,8 @@ public class Ma {
 				             .collect(Collectors.toCollection(ArrayList<Command>::new));
 			} catch (IllegalArgumentException e) {
 				System.out.println("The command doesn't exist");
-				throw e;
+				return new ArrayList<>();
 			}
 		}
 	}
-
 }
