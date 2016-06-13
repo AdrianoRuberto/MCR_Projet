@@ -4,6 +4,10 @@ import entities.Character;
 
 import java.util.function.Predicate;
 
+/**
+ * The SpellDecorator is an abstraction who gives a lot of function to make
+ * operations on decorators.
+ */
 public abstract class SpellDecorator implements Spell {
 	protected Spell spell;
 

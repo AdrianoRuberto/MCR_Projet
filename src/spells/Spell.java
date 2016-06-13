@@ -3,10 +3,7 @@ package spells;
 import entities.Character;
 
 /**
- * Projet : MCR_Projet
- * Créé le 11.06.2016.
- *
- * @author Adriano Ruberto
+ * The Spell interface with hit and getManaCost function.
  */
 public interface Spell {
 

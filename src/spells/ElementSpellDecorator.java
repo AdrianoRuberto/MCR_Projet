@@ -7,10 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Projet : MCR_Projet
- * Créé le 11.06.2016.
+ * The ElementSpellDecorator implement a decorator on the spell which add an
+ * element on it.
  *
- * @author Adriano Ruberto
+ * It's only possible to have 1 unique element by spell.
  */
 public class ElementSpellDecorator extends SpellDecorator {
 
@@ -35,7 +35,7 @@ public class ElementSpellDecorator extends SpellDecorator {
 
 	/**
 	 * A spell can only have 1 ElementSpellDecorator with the same element.
-	 * It's impossible to have 2 same element in the spell.
+	 * It's impossible to have 2 same element in one spell.
 	 * {@inheritDoc}
 	 */
 	@Override

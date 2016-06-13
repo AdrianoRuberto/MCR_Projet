@@ -2,6 +2,9 @@ package spells;
 
 import entities.Character;
 
+/**
+ * The ConcreteSpell is a basic implementation of a Spell.
+ */
 public class ConcreteSpell implements Spell {
 
 	private int damage;
