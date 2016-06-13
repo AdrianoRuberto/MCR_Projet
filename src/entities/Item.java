@@ -21,9 +21,6 @@ interface Item {
 		return baseHP;
 	}
 
-	default boolean isWeapon() {
-		return false;
-	}
 
 	default boolean isArmor() {
 		return false;
@@ -34,11 +31,51 @@ interface Item {
 	}
 
 	enum Weapon implements Item {
-		gourdin("Gourdin"),
-		epee("Épée"),
-		dague("Dague"),
-		hache("Hache"),
-		arc("Arc") {
+		dagger("Dagger") {
+			@Override
+			public int modifyMaxHit(int baseMax) {
+				return baseMax+2;
+			}
+		},
+		sword("Sword") {
+			@Override
+			public int modifyMinHit(int baseMin) {
+				return baseMin+1;
+			}
+			@Override
+			public int modifyMaxHit(int baseMax) {
+				return baseMax+1;
+			}
+		},
+		shortbow("Shortbow") {
+			@Override
+			public int modifyMinHit(int baseMin) {
+				return baseMin+1;
+			}
+			@Override
+			public int modifyMaxHit(int baseMax) {
+				return baseMax+1;
+			}
+		},
+		axe("Axe"){
+			@Override
+			public int modifyMinHit(int baseMin) {
+				return Math.min(1,baseMin-1);
+			}
+			@Override
+			public int modifyMaxHit(int baseMax) {
+				return baseMax+2;
+			}
+		},
+		battleaxe("Battleaxe") {
+			@Override
+			public int modifyMinHit(int baseMin) {
+				return Math.min(1,baseMin-2);
+			}
+			@Override
+			public int modifyMaxHit(int baseMax) {
+				return baseMax+2;
+			}
 		};
 
 		private String name;
@@ -54,11 +91,6 @@ interface Item {
 		@Override
 		public String getName() {
 			return name;
-		}
-
-		@Override
-		public boolean isWeapon() {
-			return true;
 		}
 
 	}

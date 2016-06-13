@@ -8,7 +8,7 @@ public abstract class Character {
 	protected String name;
 	protected int level;
 	protected int healthPoints;
-	private Element last;
+	private Element typeElement;
 	private int mana;
 
 	public Character(String name, int level, int healthPoints) {
@@ -30,7 +30,6 @@ public abstract class Character {
 		return name;
 	}
 
-
 	/**
 	 * Prints itself in the System.out
 	 */
@@ -46,17 +45,15 @@ public abstract class Character {
 		return mana;
 	}
 
-	public void receiveDamage(int damage, Element element) {
-		last = element;
-		receiveDamage(damage);
-	}
-
 	public void receiveDamage(int damage) {
 		healthPoints -= damage;
 		System.out.println(name + " is hit (" + damage + "), " + healthPoints + " remaining");
 	}
-
-	public Optional<Element> getLastElement() {
-		return Optional.ofNullable(last);
+	
+	/**
+	 * @return the element type of the monster
+	 */
+	public Element getElementType() {
+		return typeElement;
 	}
 }

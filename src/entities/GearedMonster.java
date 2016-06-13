@@ -9,7 +9,8 @@ public class GearedMonster extends MonsterDecorator {
 				m.name,
 				m.level,
 				i.modifyHealthPoints(m.healthPoints),
-				m
+				m,
+				m.getElementType()
 		);
 
 		if (m.equippedWeapons() + i.handsNeeded() > maxEquippedWeapons()) {

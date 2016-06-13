@@ -25,17 +25,15 @@ public class ElementSpellDecorator extends SpellDecorator {
 	@Override
 	public void hit(Character from, Character to) {
 		super.hit(from, to);
-		Optional<Element> last = to.getLastElement();
+		Element elem = to.getElementType();
 
 		double dmg = 10;
-		if (last.isPresent()) {
-			if (element.getStrong() == last.get())
-				dmg *= 1.5;
-			else if (element.getWeak() == last.get())
-				dmg *= 0.5;
-		}
+		if (element.getStrong() == elem)
+			dmg *= 1.5;
+		else if (element.getWeak() == elem)
+			dmg *= 0.5;
 
-		to.receiveDamage((int) dmg, element);
+		to.receiveDamage((int) dmg);
 	}
 
 	@Override

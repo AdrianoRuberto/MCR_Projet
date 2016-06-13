@@ -6,28 +6,27 @@ import java.io.PrintStream;
 
 public class TerminalUtils {
 	private static final String reset = (char) 27 + "[0m";
-	public static void printWithColor(PrintStream out, String toPrint, Colors color) {
-		out.println(color.colorCode() + toPrint + reset);
+
+	public static String colorize(String toPrint, Colors color) {
+		return color.colorCode() + toPrint + reset;
 	}
-	public static void printWithElement(PrintStream out, String toPrint, Element elem) {
+
+	public static String colorize(String toPrint, Element elem) {
 		switch (elem) {
 			case FIRE:
-				printWithColor(out, toPrint, Colors.RED);
-				break;
+				return colorize(toPrint, Colors.RED);
 			case LEAF:
-				printWithColor(out, toPrint, Colors.GREEN);
-				break;
+				return colorize(toPrint, Colors.GREEN);
 			case WATER:
-				printWithColor(out, toPrint, Colors.BLUE);
-				break;
+				return colorize(toPrint, Colors.BLUE);
 			case ROCK:
-				printWithColor(out, toPrint, Colors.BROWN);
-				break;
+				return colorize(toPrint, Colors.BROWN);
 			case THUNDER:
-				printWithColor(out, toPrint, Colors.YELLOW);
-				break;
+				return colorize(toPrint, Colors.YELLOW);
 			case NORMAL:
-				printWithColor(out, toPrint, Colors.GREY);
+				return colorize(toPrint, Colors.GREY);
+			default:
+				return toPrint;
 		}
 	}
 

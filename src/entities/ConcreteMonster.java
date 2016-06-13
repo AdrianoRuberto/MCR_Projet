@@ -16,13 +16,11 @@ import java.util.stream.Collectors;
  */
 public class ConcreteMonster extends Monster {
 	private int avgDamage, rngDamage;
-	private Element element;
 
 	public ConcreteMonster(String name, int level, int healthPoints, int avgDamage, int rngDamage, Element elem) {
-		super(name, level, healthPoints);
+		super(name, level, healthPoints, elem);
 		this.avgDamage = avgDamage;
 		this.rngDamage = rngDamage;
-		this.element = elem;
 	}
 
 	/**
@@ -49,80 +47,75 @@ public class ConcreteMonster extends Monster {
 	public static Monster generateConcreteMonster(int level) { // TODO: replace magic values by constants
 		Random r = new Random();
 		MonsterType type = MonsterType.values()[r.nextInt(MonsterType.values().length)];
-		int monsterLevel = Math.max(1, level + (r.nextInt(2) - 1)); // player level ± 1
+		int monsterLevel = Math.max(1, level + (r.nextInt(2) - 1)); // player level ± 0,1
 		int hp = (int) (type.baseHP + (level) % (double) type.baseHP);
 		int baseDamage = type.baseDamage + r.nextInt(monsterLevel);
 		int rngDamage = Math.max(2, r.nextInt(type.baseDamage));
 		return new ConcreteMonster(type.name, monsterLevel, hp, baseDamage, rngDamage, type.elem) {
 			@Override
-			public void print() {
-				TerminalUtils.printWithElement(System.out, type.sprite, type.elem);
-				System.out.println(this.toString());
+			public String toString() {
+				return TerminalUtils.colorize(type.sprite, type.elem) + super.toString();
 			}
 		};
-	}
-
-	@Override
-	public void print() {
-		TerminalUtils.printWithElement(System.out, this.toString(), element);
 	}
 
 	/**
 	 * The monsters data
 	 */
 	private enum MonsterType {
-		anguille_geante("Giant eel", Element.THUNDER, "anguille.ascii"),
-		araignee_rouge("Red spider", Element.FIRE, "araignee.ascii"),
-		araignee_geante("Giant spider", Element.NORMAL, "araignee.ascii"),
-		auroch("Auroch", Element.ROCK, "auroch.ascii"),
-		basilic("Basilic", Element.LEAF, "basilic.ascii"),
-		calmar("Calmar", Element.WATER, "calmar.ascii"),
-		chauve_souris("Giant bat", Element.ROCK, "chauve_souris.ascii"),
-		crocodile("Crocodile", Element.WATER, "crocodile.ascii"),
-		cyclope("Cyclops", Element.ROCK, "cyclope.ascii"),
-		demon("Demon", Element.NORMAL, "demon.ascii"),
-		diablotin("Imp", Element.FIRE, "diablotin.ascii"),
-		dragon_noir("Black dragon", Element.FIRE, "dragon.ascii"),
-		dragon_glace("Ice dragon", Element.WATER, "dragon.ascii"),
-		efrit("Efrit", Element.FIRE, "efrit.ascii"),
-		elementaire_eau("Water elemental", Element.WATER, "elementaire_eau.ascii"),
-		elementaire_feu("Fire elemental", Element.FIRE, "elementaire_feu.ascii"),
-		elementaire_terre("Rock elemental", Element.ROCK, "elementaire_roche.ascii"),
-		elementaire_vegetal("Leaf elemental", Element.LEAF, "elementaire_plante.ascii"),
-		elementaire_foudre("Thunder elemental", Element.THUNDER, "elementaire_foudre.ascii"),
-		fantome("Ghost", Element.NORMAL, "fantome.ascii"),
-		fourmi_geante("Giant ant", Element.LEAF, "fourmi.ascii"),
-		geant_pierre("Giant of mountain", Element.ROCK, "geant.ascii"),
-		geant_tempete("Giant of storm", Element.THUNDER, "geant.ascii"),
-		gobelin("Gobelin", Element.NORMAL, "gobelin.ascii"),
-		gobelours("Bugbear", Element.LEAF, "ours.ascii"),
-		gorille("Gorilla", Element.LEAF, "gorille.ascii"),
-		grenouille_venimeuse("Poison frog", Element.LEAF, "grenouille.ascii"),
-		griffon("Griffin", Element.THUNDER, "griffon.ascii"),
-		grizzly("Grizzly", Element.NORMAL, "ours.ascii"),
-		harpie("Harpy", Element.NORMAL, "harpie.ascii"),
-		hydre("Hydra", Element.WATER, "hydre.ascii"),
-		kraken("Kraken", Element.WATER, "kraken.ascii"),
-		licorne("Unicorn", Element.NORMAL, "licorne.ascii"),
-		loup_garou("Werewolf", Element.NORMAL, "loup_garou.ascii"),
-		minotaure("Minotaur", Element.ROCK, "minotaure.ascii"),
-		molosse_infernal("Hellhound", Element.FIRE, "molosse.ascii"),
-		ogre("Ogre", Element.ROCK, "ogre.ascii"),
-		ours_sanguinaire("Bloody bear", Element.NORMAL, "ours.ascii"),
-		phoenix("Phoenix", Element.FIRE, "phoenix.ascii"),
-		pixie("Pixie", Element.THUNDER, "pixie.ascii"),
-		rat_garou("Skaven", Element.NORMAL, "rat_garou.ascii"),
-		requin_sanguinaire("Angry shark", Element.WATER, "requin.ascii"),
-		squelette("Skeletton", Element.NORMAL, "squelette.ascii"),
-		succube("Succubus", Element.FIRE, "succube.ascii"),
-		tertre_errant("Wandering Ent", Element.LEAF, "elementaire_plante.ascii"),
-		vampire("Vampire", Element.NORMAL, "vampire.ascii"),
-		zombie("Zombie", Element.NORMAL, "zombie.ascii");
+		anguille_geante("Giant eel", Element.THUNDER, "anguille.ascii", 0),
+		araignee_rouge("Red spider", Element.FIRE, "araignee.ascii", 4),
+		araignee_geante("Giant spider", Element.NORMAL, "araignee.ascii", 4),
+		auroch("Auroch", Element.ROCK, "auroch.ascii", 0),
+		basilic("Basilic", Element.LEAF, "basilic.ascii", 0),
+		calmar("Calmar", Element.WATER, "calmar.ascii", 8),
+		chauve_souris("Giant bat", Element.ROCK, "chauve_souris.ascii", 0),
+		crocodile("Crocodile", Element.WATER, "crocodile.ascii", 0),
+		cyclope("Cyclops", Element.ROCK, "cyclope.ascii", 2),
+		demon("Demon", Element.NORMAL, "demon.ascii", 2),
+		diablotin("Imp", Element.FIRE, "diablotin.ascii", 1),
+		dragon_noir("Black dragon", Element.FIRE, "dragon.ascii", 0),
+		dragon_glace("Ice dragon", Element.WATER, "dragon.ascii", 0),
+		efrit("Efrit", Element.FIRE, "efrit.ascii", 0),
+		elementaire_eau("Water elemental", Element.WATER, "elementaire_eau.ascii", 0),
+		elementaire_feu("Fire elemental", Element.FIRE, "elementaire_feu.ascii", 0),
+		elementaire_terre("Rock elemental", Element.ROCK, "elementaire_roche.ascii", 0),
+		elementaire_vegetal("Leaf elemental", Element.LEAF, "elementaire_plante.ascii", 0),
+		elementaire_foudre("Thunder elemental", Element.THUNDER, "elementaire_foudre.ascii", 0),
+		fantome("Ghost", Element.NORMAL, "fantome.ascii", 0),
+		fourmi_geante("Giant ant", Element.LEAF, "fourmi.ascii", 0),
+		geant_pierre("Giant of mountain", Element.ROCK, "geant.ascii", 2),
+		geant_tempete("Giant of storm", Element.THUNDER, "geant.ascii", 2),
+		gobelin("Gobelin", Element.NORMAL, "gobelin.ascii", 2),
+		gobelours("Bugbear", Element.LEAF, "ours.ascii", 2),
+		gorille("Gorilla", Element.LEAF, "gorille.ascii", 0),
+		grenouille_venimeuse("Poison frog", Element.LEAF, "grenouille.ascii", 0),
+		griffon("Griffin", Element.THUNDER, "griffon.ascii", 0),
+		grizzly("Grizzly", Element.NORMAL, "ours.ascii", 0),
+		harpie("Harpy", Element.NORMAL, "harpie.ascii", 1),
+		hydre("Hydra", Element.WATER, "hydre.ascii", 0),
+		kraken("Kraken", Element.WATER, "kraken.ascii", 0),
+		licorne("Unicorn", Element.NORMAL, "licorne.ascii", 0),
+		loup_garou("Werewolf", Element.NORMAL, "loup_garou.ascii", 2),
+		minotaure("Minotaur", Element.ROCK, "minotaure.ascii", 2),
+		molosse_infernal("Hellhound", Element.FIRE, "molosse.ascii", 0),
+		ogre("Ogre", Element.ROCK, "ogre.ascii", 2),
+		ours_sanguinaire("Bloody bear", Element.NORMAL, "ours.ascii", 0),
+		phoenix("Phoenix", Element.FIRE, "phoenix.ascii", 0),
+		pixie("Pixie", Element.THUNDER, "pixie.ascii", 1),
+		rat_garou("Skaven", Element.NORMAL, "rat_garou.ascii", 2),
+		requin_sanguinaire("Angry shark", Element.WATER, "requin.ascii", 0),
+		squelette("Skeletton", Element.NORMAL, "squelette.ascii", 2),
+		succube("Succubus", Element.FIRE, "succube.ascii", 1),
+		tertre_errant("Wandering Ent", Element.LEAF, "elementaire_plante.ascii", 2),
+		vampire("Vampire", Element.NORMAL, "vampire.ascii", 2),
+		zombie("Zombie", Element.NORMAL, "zombie.ascii", 2);
 
 		private final int baseHP;
 		private final String name;
 		private final Element elem;
 		private final int baseDamage;
+		private final int nbHands;
 		private String sprite;
 
 		public static final String spritesFolder = "sprites";
@@ -135,11 +128,12 @@ public class ConcreteMonster extends Monster {
 		 * @param elem the element corresponding to the monster
 		 * @param spritePath the ascii sprite
 		 */
-		MonsterType(String name, int baseHP, int baseDamage, Element elem, String spritePath) {
+		MonsterType(String name, int baseHP, int baseDamage, Element elem, String spritePath, int nbHands) {
 			this.name = name;
 			this.elem = elem;
 			this.baseHP = baseHP;
 			this.baseDamage = baseDamage;
+			this.nbHands = nbHands;
 
 			try {
 				File spriteFile = new File(spritesFolder + "/" + spritePath);
@@ -157,8 +151,8 @@ public class ConcreteMonster extends Monster {
 		 * @param elem the element corresponding to the monster
 		 * @param spritePath the ascii sprite
 		 */
-		MonsterType(String name, Element elem, String spritePath) {
-			this(name, 10, 5, elem, spritePath);
+		MonsterType(String name, Element elem, String spritePath, int nbHands) {
+			this(name, 10, 5, elem, spritePath, nbHands);
 		}
 
 	}

@@ -1,5 +1,7 @@
 package entities;
 
+import spells.Element;
+
 import java.util.Random;
 
 /**
@@ -7,6 +9,7 @@ import java.util.Random;
  */
 public abstract class Monster extends Character {
 	private Random random;
+	private Element type;
 
 	/**
 	 * Monster constructor
@@ -14,9 +17,10 @@ public abstract class Monster extends Character {
 	 * @param level Its level
 	 * @param healthPoints Its full health points
 	 */
-	public Monster(String name, int level, int healthPoints) {
+	public Monster(String name, int level, int healthPoints, Element elem) {
 		super(name, level, healthPoints);
 		random = new Random((name+level+healthPoints).hashCode());
+		this.type = elem;
 	}
 
 	/**
