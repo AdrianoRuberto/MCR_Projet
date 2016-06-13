@@ -2,7 +2,10 @@ import entities.GearedMonster;
 import entities.Monster;
 import entities.Player;
 import spells.*;
+import utils.AsciiImages;
+import utils.TerminalUtils;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,6 +17,9 @@ public class Ma {
 
 	public Ma() {
 		scanner = new Scanner(System.in);
+		try {
+			System.out.println(TerminalUtils.colorize(AsciiImages.parseAscii("sprites/sorcier.ascii"), TerminalUtils.Colors.DARKBLUE));
+		} catch (FileNotFoundException ignored) { }
 		System.out.println("Welcome to Mā ! You will fight against evil monsters using your powerful magics !");
 		System.out.print("Enter your magician name: ");
 		String name = scanner.nextLine();

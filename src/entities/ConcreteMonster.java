@@ -1,6 +1,7 @@
 package entities;
 
 import spells.Element;
+import utils.AsciiImages;
 import utils.TerminalUtils;
 
 import java.io.BufferedReader;
@@ -143,14 +144,10 @@ public class ConcreteMonster extends Monster {
 			this.baseHP = baseHP;
 			this.baseDamage = baseDamage;
 			this.nbHands = nbHands;
-
 			try {
-				File spriteFile = new File(spritesFolder + "/" + spritePath);
-				BufferedReader fileReader = new BufferedReader(new FileReader(spriteFile));
-				sprite = fileReader.lines().collect(Collectors.joining("\n"));
+				this.sprite = AsciiImages.parseAscii(spritesFolder+"/"+spritePath);
 			} catch (FileNotFoundException e) {
-				System.out.println("Could not find the sprite ascii image while searching in this path:");
-				System.out.println(spritesFolder + "/" + spritePath);
+				System.out.println("Could not find the ascii file");
 			}
 		}
 

@@ -31,7 +31,7 @@ public class TerminalUtils {
 	}
 
 	public enum Colors {
-		BLACK(30), GREY(90), RED(91), BROWN(31), GREEN(32), YELLOW(33), BLUE(94), MAGENTA(5), CYAN(6), WHITE(7);
+		BLACK(30), GREY(90), RED(91), BROWN(31), GREEN(32), YELLOW(33), DARKBLUE(34), BLUE(94), MAGENTA(5), CYAN(6), WHITE(7);
 
 		private int colorId;
 		Colors(int i) {
