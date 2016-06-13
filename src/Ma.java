@@ -95,9 +95,9 @@ public class Ma {
 
 	private enum Command {
 		fire("Throw a fire spell", "Fire help", Element.FIRE),
-		water("Throw an water spell", "Water help", Element.WATER),
+		water("Throw a water spell", "Water help", Element.WATER),
 		rock("Throw a rock spell", "Rock help", Element.ROCK),
-		leaf("Throw an leaf spell", "leaf help", Element.LEAF),
+		leaf("Throw a leaf spell", "leaf help", Element.LEAF),
 		thunder("Throw a thunder spell", "Thunder help", Element.THUNDER),
 		menu("Displays the menu ", ""),
 		help("Display the help. ex: 'help fire'", ""),
