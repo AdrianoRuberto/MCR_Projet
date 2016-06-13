@@ -25,7 +25,7 @@ public class GearedMonster extends MonsterDecorator {
 
 	@Override
 	public String getName() {
-		return String.format("%s, avec %s", name, item.getName());
+		return String.format("%s, with %s", name, item.getName());
 	}
 
 	@Override

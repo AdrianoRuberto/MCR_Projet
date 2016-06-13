@@ -44,7 +44,7 @@ public class ConcreteMonster extends Monster {
 	 * @param level a level near the monster's level. Typically the player's level.
 	 * @return A random monster
 	 */
-	public static Monster generateConcreteMonster(int level) { // TODO: replace magic values by constants
+	public static Monster generateConcreteMonster(int level) {
 		Random r = new Random();
 		MonsterType type = MonsterType.values()[r.nextInt(MonsterType.values().length)];
 		int monsterLevel = Math.max(1, level + (r.nextInt(2) - 1)); // player level ± 0,1
