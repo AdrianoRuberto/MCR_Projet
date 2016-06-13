@@ -1,4 +1,5 @@
-import entities.ConcreteMonster;
+import entities.GearedMonster;
+import entities.Monster;
 import entities.Player;
 import spells.ConcreteSpell;
 import spells.Element;
@@ -30,7 +31,7 @@ public class Ma {
 	}
 
 	public void start() {
-		ConcreteMonster monster = generateMonster();
+		Monster monster = GearedMonster.generateGearedMonster(player.level());
 		System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
 		printMenu();
 		while (!readCommand())
@@ -39,10 +40,6 @@ public class Ma {
 
 	public void stop() {
 		running = false;
-	}
-
-	private ConcreteMonster generateMonster() {
-		return new ConcreteMonster("Goblin", 1, 10, 2, 1);
 	}
 
 	private boolean readCommand() {
