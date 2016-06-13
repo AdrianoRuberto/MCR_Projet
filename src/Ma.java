@@ -101,6 +101,12 @@ public class Ma {
 
 	/**
 	 * The second phase of the fight.
+	 * The player can use the followed commands :
+	 * - cast
+	 * - alter
+	 * - help
+	 * - menu
+	 * - quit
 	 *
 	 * @return true if the second phase is finished
 	 */
@@ -118,11 +124,10 @@ public class Ma {
 							(ElementSpellDecorator) s).getElement() == toFind)));
 					try {
 						((SpellDecorator) spell).alter(pos, new ElementSpellDecorator(null, commands.get(2).element));
-						System.out.println("The new spell is : " + spell);
 					} catch (IllegalArgumentException e) {
 						System.out.println(e.getMessage());
-						System.out.println("The spell is : " + spell);
 					}
+					System.out.println("The spell is : " + spell);
 					return false;
 				}
 			case help:
