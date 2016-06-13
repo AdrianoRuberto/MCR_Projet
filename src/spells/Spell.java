@@ -2,41 +2,26 @@ package spells;
 
 import entities.Character;
 
-import java.util.Optional;
-
-public class Spell {
-	private Element element;
-
-	public Spell(Element element) {
-		this.element = element;
-	}
+/**
+ * Projet : MCR_Projet
+ * Créé le 11.06.2016.
+ *
+ * @author Adriano Ruberto
+ */
+public abstract class Spell {
 
 	/**
 	 * Hits a character with this spell.
 	 *
 	 * @param from the character who cast the spell
-	 * @param to the character who get hit by the spell
+	 * @param to   the character who get hit by the spell
 	 */
-	public void hit(Character from, Character to) {
-		Optional<Element> last = to.getLastElement();
-
-		double dmg = 10;
-		if (last.isPresent()) {
-			if (element.getStrong() == last.get())
-				dmg *= 1.5;
-			else if (element.getWeak() == last.get())
-				dmg *= 0.5;
-		}
-
-		to.receiveDamage((int) dmg, element);
-	}
+	public abstract void hit(Character from, Character to);
 
 	/**
 	 * Gets the mana cost of the spell.
 	 *
 	 * @return the mana cost of the spell
 	 */
-	public int getManaCost() {
-		return 10;
-	}
+	public abstract int getManaCost();
 }
