@@ -8,7 +8,7 @@ import entities.Character;
  *
  * @author Adriano Ruberto
  */
-public abstract class Spell {
+public interface Spell {
 
 	/**
 	 * Hits a character with this spell.
@@ -16,12 +16,12 @@ public abstract class Spell {
 	 * @param from the character who cast the spell
 	 * @param to   the character who get hit by the spell
 	 */
-	public abstract void hit(Character from, Character to);
+	void hit(Character from, Character to);
 
 	/**
 	 * Gets the mana cost of the spell.
 	 *
 	 * @return the mana cost of the spell
 	 */
-	public abstract int getManaCost();
+	int getManaCost();
 }

@@ -2,7 +2,7 @@ package spells;
 
 import entities.Character;
 
-public class ConcreteSpell extends Spell {
+public class ConcreteSpell implements Spell {
 
 	private int damage;
 	private int manaCost;

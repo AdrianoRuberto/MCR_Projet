@@ -68,9 +68,18 @@ public enum Element {
 		}
 	};
 
-	private Element strong, weak;
-
+	/**
+	 * Gets which element he's strong.
+	 *
+	 * @return the strong element
+	 */
 	public abstract Element getStrong();
+
+	/**
+	 * Gets which element he's weak.
+	 *
+	 * @return the weak element
+	 */
 	public abstract Element getWeak();
 }
 

@@ -2,7 +2,7 @@ package spells;
 
 import entities.Character;
 
-public abstract class SpellDecorator extends Spell {
+public abstract class SpellDecorator implements Spell {
 	private Spell spell;
 
 	public SpellDecorator(Spell spell) {
