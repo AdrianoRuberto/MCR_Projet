@@ -18,8 +18,8 @@ public class ElementSpellDecorator extends SpellDecorator {
 	public ElementSpellDecorator(Spell spell, Element element) {
 		super(spell);
 		this.element = element;
-		if (!isValid(spell))
-			throw new IllegalArgumentException("Can't add the decorator");
+		if (!isValid(this))
+			throw new IllegalArgumentException("[ERROR] The spell " + spell + " can't add " + element);
 	}
 
 	/**
