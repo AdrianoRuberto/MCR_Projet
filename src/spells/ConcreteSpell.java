@@ -18,7 +18,7 @@ public class ConcreteSpell implements Spell {
 	@Override
 	public void hit(Character from, Character to) {
 		to.receiveDamage(damage);
-		from.removeMana(getManaCost());
+		from.setMana(getManaCost());
 	}
 
 	/**

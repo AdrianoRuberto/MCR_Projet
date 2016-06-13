@@ -3,16 +3,14 @@ import entities.Monster;
 import entities.Player;
 import spells.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Ma {
 	private Player player;
 	private Scanner scanner;
 	private Spell spell;
+	private Random random;
 
 	public Ma() {
 		scanner = new Scanner(System.in);
@@ -20,19 +18,25 @@ public class Ma {
 		System.out.print("Enter your magician name: ");
 		String name = scanner.nextLine();
 		player = new Player(name);
+		random = new Random();
 	}
 
 	public static void main(String[] args) {
 		Ma game = new Ma();
-		game.start();
+		try {
+			game.start();
+		} catch (InterruptedException e) {
+			System.out.println("Unexpected quit !");
+		}
 	}
 
-	public void start() {
+	public void start() throws InterruptedException {
 		List<Command> commands;
 		printMenu();
 		while (true) {
+			Thread.sleep(random.nextInt(3000) + 1000);
 			Monster monster = GearedMonster.generateGearedMonster(player.getLevel());
-			System.out.printf("A wild %s appears ! What are you going to do ?\n", monster);
+			System.out.printf("%s appears ! What are you going to do ?\n", monster);
 
 			while (monster.isAlive()) {
 				do {
@@ -50,7 +54,7 @@ public class Ma {
 					player.receiveDamage(monster.hit());
 			}
 
-			System.out.println("You killed " + monster.getName());
+			System.out.println("You killed the " + monster.getName());
 		}
 	}
 

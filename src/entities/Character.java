@@ -2,16 +2,24 @@ package entities;
 
 import spells.Element;
 
-import java.util.Optional;
-
+/**
+ * Represents a role played character.
+ */
 public abstract class Character {
-	protected String name;
+	protected final String name;
 	protected int level;
 	protected int healthPoints;
-	private Element typeElement;
-	private int mana;
+	protected int maxHealthPoints;
+	protected int mana, maxMana;
+	private final Element typeElement;
 
-	public Character(String name, int level, int healthPoints) {
+	/**
+	 * Character constructor
+	 * @param name The character's name
+	 * @param level The character's level
+	 * @param healthPoints The character's health points
+	 */
+	public Character(String name, int level, int healthPoints, int manaPoints, Element element) {
 		if (level <= 0) {
 			throw new IllegalArgumentException("Level should be > 0");
 		} else if (healthPoints <= 0) {
@@ -20,34 +28,65 @@ public abstract class Character {
 		this.name = name;
 		this.level = level;
 		this.healthPoints = healthPoints;
+		this.maxHealthPoints = healthPoints;
+		this.mana = manaPoints;
+		this.maxMana = manaPoints;
+		this.typeElement = element;
 	}
 
+	/**
+	 * @return whether the character is alive
+	 */
 	public boolean isAlive() {
 		return healthPoints > 0;
 	}
 
+	/**
+	 * @return the character name
+	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Prints itself in the System.out
+	 * Sets the mana value
+	 * @param mana the new amount of mana
 	 */
-	public void print() {
-		System.out.println(this.toString());
+	public void setMana(int mana) {
+		if (mana > maxMana)
+			throw new IllegalArgumentException("Exceeding the maximum mana");
+		else if (mana < 0)
+			throw new IllegalArgumentException("Mana should be positive");
+		this.mana = mana;
 	}
 
-	public void removeMana(int n) {
-		mana -= n;
-	}
-
+	/**
+	 * Mana getter
+	 * @return the mana status
+	 */
 	public int getMana() {
 		return mana;
 	}
 
+	public int getMaxMana() {
+		return maxMana;
+	}
+
+	public int getHealthPoints() {
+		return healthPoints;
+	}
+
+	public int getMaxHealthPoints() {
+		return maxHealthPoints;
+	}
+
+	/**
+	 * Gives damage to the character
+	 * @param damage the damage amount received
+	 */
 	public void receiveDamage(int damage) {
 		healthPoints -= damage;
-		System.out.println(name + " is hit (" + damage + "), " + healthPoints + " remaining");
+		System.out.println(name + " is hit (" + damage + "dmg), " + healthPoints + " hp remaining");
 	}
 	
 	/**

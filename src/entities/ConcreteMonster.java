@@ -17,6 +17,15 @@ import java.util.stream.Collectors;
 public class ConcreteMonster extends Monster {
 	private int avgDamage, rngDamage;
 
+	/**
+	 * Concrete monster constructor
+	 * @param name the monster's name
+	 * @param level the monster's level
+	 * @param healthPoints the monster's hp
+	 * @param avgDamage the monster's average damage
+	 * @param rngDamage the monster's damage range (effective damage will be from avgDamage-(rngDamage/2) to avgDamage+(rngDamage/2)
+	 * @param elem the monster's element type
+	 */
 	public ConcreteMonster(String name, int level, int healthPoints, int avgDamage, int rngDamage, Element elem) {
 		super(name, level, healthPoints, elem);
 		this.avgDamage = avgDamage;
@@ -40,8 +49,8 @@ public class ConcreteMonster extends Monster {
 	}
 
 	/**
-	 * Gives a random monster that it at a getLevel near the given getLevel
-	 * @param level a getLevel near the monster's getLevel. Typically the player's getLevel.
+	 * Gives a random monster that is at a level near the given level
+	 * @param level a level near the monster's level. Typically the player's level.
 	 * @return A random monster
 	 */
 	public static Monster generateConcreteMonster(int level) {
@@ -54,7 +63,7 @@ public class ConcreteMonster extends Monster {
 		return new ConcreteMonster(type.name, monsterLevel, hp, baseDamage, rngDamage, type.elem) {
 			@Override
 			public String toString() {
-				return TerminalUtils.colorize(type.sprite, type.elem) + super.toString();
+				return TerminalUtils.colorize(type.sprite, type.elem) + "\n" + super.toString();
 			}
 		};
 	}

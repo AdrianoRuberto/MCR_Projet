@@ -9,7 +9,6 @@ import java.util.Random;
  */
 public abstract class Monster extends Character {
 	private Random random;
-	private Element type;
 
 	/**
 	 * Monster constructor
@@ -18,9 +17,8 @@ public abstract class Monster extends Character {
 	 * @param healthPoints Its full health points
 	 */
 	public Monster(String name, int level, int healthPoints, Element elem) {
-		super(name, level, healthPoints);
+		super(name, level, healthPoints, 0, elem);
 		random = new Random((name+level+healthPoints).hashCode());
-		this.type = elem;
 	}
 
 	/**
@@ -46,14 +44,14 @@ public abstract class Monster extends Character {
 	protected abstract int maxHit();
 
 	/**
-	 * Gives how many weapons the monster is wielding
+	 * @return how many weapons the monster is wielding
 	 */
 	protected int equippedWeapons() {
 		return 0;
 	}
 
 	/**
-	 * Gives how many weapons the monster can wield
+	 * @return how many weapons the monster can wield
 	 */
 	protected int maxEquippedWeapons() {
 		return 1;
@@ -70,7 +68,7 @@ public abstract class Monster extends Character {
 	 * @return The string representation of the monster
 	 */
 	public String toString() {
-		return String.format("%s, lvl:%d, hp:%d", this.getName(), level, healthPoints);
+		return String.format("A wild %s at level %d", this.getName(), level);
 	}
 
 }

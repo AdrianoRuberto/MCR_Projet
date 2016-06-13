@@ -21,7 +21,6 @@ interface Item {
 		return baseHP;
 	}
 
-
 	default boolean isArmor() {
 		return false;
 	}

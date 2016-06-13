@@ -1,10 +1,12 @@
 package entities;
 
+import spells.Element;
+
 public class Player extends Character {
 	private int level;
 
 	public Player(String name) {
-		super(name, 1, 10);
+		super(name, 1, 10, 10, Element.NORMAL);
 		this.level = 1;
 	}
 

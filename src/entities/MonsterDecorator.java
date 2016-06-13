@@ -2,11 +2,18 @@ package entities;
 
 import spells.Element;
 
+/**
+ * Represents a monster decorator. Adds functionalities to them.
+ */
 public abstract class MonsterDecorator extends Monster {
 	protected Monster m;
 
-	public MonsterDecorator(String name, int level, int healthPoints, Monster m, Element elem) {
-		super(name, level, healthPoints, elem);
+	/**
+	 * Monster decorator constructor
+	 * @param m the monster to decorate
+	 */
+	public MonsterDecorator(Monster m) {
+		super(m.name, m.level, m.healthPoints, m.getElementType());
 		this.m = m;
 	}
 }
