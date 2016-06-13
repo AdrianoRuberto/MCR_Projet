@@ -1,3 +1,4 @@
+import entities.ConcreteMonster;
 import entities.GearedMonster;
 import entities.Monster;
 import entities.Player;
@@ -15,6 +16,7 @@ public class Ma {
 	private Player player;
 	private boolean running;
 	private Scanner scanner;
+	private Spell spell;
 
 	public Ma() {
 		scanner = new Scanner(System.in);
@@ -33,50 +35,76 @@ public class Ma {
 	public void start() {
 		Monster monster = GearedMonster.generateGearedMonster(player.level());
 		System.out.printf("A wild %s appears ! What are you going to do ?\n", monster.getName());
-		printMenu();
-		while (!readCommand())
-			;
+
+		do {
+			printMenu();
+
+		} while (!executeCommand());
+
+		//Throws spell
+
 	}
 
 	public void stop() {
 		running = false;
 	}
 
-	private boolean readCommand() {
-		System.out.print("> ");
+	private ConcreteMonster generateMonster() {
+		return new ConcreteMonster("Goblin", 1, 10, 2, 1);
+	}
+
+	public boolean executeCommand() {
 		String input = scanner.nextLine();
 		try {
-			ArrayList<Command> commands = Arrays.stream(input.split(" "))
-			                                    .map(Command::valueOf)
-			                                    .collect(Collectors.toCollection(ArrayList<Command>::new));
+			ArrayList<Command> commands = Arrays.stream(input.split(" ")).map(Command::valueOf).collect(Collectors.toCollection(ArrayList<Command>::new));
 			switch (commands.get(0)) {
+
+				case prepare:
+					if (commands.size() > 1) {
+						spell = new ConcreteSpell(10, 10);
+						for (Command command : commands) {
+							spell = new ElementSpellDecorator(spell, command.element);
+						}
+
+						System.out.println("You have successfully prepare a spell");
+						return false;
+					} else {
+						System.out.println("Prepare spell command not valid, use help ");
+						return false;
+					}
+
+				case cast:
+					if (spell != null) {
+						;//exec spell
+						return true;
+					} else {
+						return false;
+					}
+
 				case menu:
 					printMenu();
 					return true;
+
 				case quit:
 					stop();
 					return true;
+
 				case help:
 					if (commands.size() == 2) {
 						System.out.println(commands.get(1).helpText);
 						return true;
 					} else {
-						System.out.println("help command should be followed by another command\n Please retry!");
+						System.out.println("help comand should be folloed by another command\n Please retry!");
 						return false;
 					}
-				default:
-					Spell spell = new ConcreteSpell(10, 10);
-					for (Command c : commands) {
-						spell = new ElementSpellDecorator(spell, c.element);
-					}
-					System.out.println(spell);
-					break;
 			}
 		} catch (IllegalArgumentException e) {
-			System.out.println("Command not recognized");
+			System.out.println("Invalide comande");
 		}
+
 		return false;
 	}
+
 
 	public void printState() {
 		System.out.println(player);
@@ -96,6 +124,9 @@ public class Ma {
 		rock("Throw a rock spell", "Rock help", Element.ROCK),
 		leaf("Throw a leaf spell", "leaf help", Element.LEAF),
 		thunder("Throw a thunder spell", "Thunder help", Element.THUNDER),
+		prepare("Prepare a spell", ""),
+		cast("Cast a prepared spell", ""),
+		alter("Alter a spell", ""),
 		menu("Displays the menu ", ""),
 		help("Display the help. ex: 'help fire'", ""),
 		quit("Quit the Mā", "");
