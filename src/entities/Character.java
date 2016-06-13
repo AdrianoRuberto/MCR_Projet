@@ -30,6 +30,14 @@ public abstract class Character {
 		return name;
 	}
 
+
+	/**
+	 * Prints itself in the System.out
+	 */
+	public void print() {
+		System.out.println(this.toString());
+	}
+
 	public void removeMana(int n) {
 		mana -= n;
 	}

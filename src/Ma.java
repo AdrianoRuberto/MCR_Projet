@@ -49,10 +49,6 @@ public class Ma {
 		running = false;
 	}
 
-	private ConcreteMonster generateMonster() {
-		return new ConcreteMonster("Goblin", 1, 10, 2, 1);
-	}
-
 	public boolean executeCommand() {
 		String input = scanner.nextLine();
 		try {
