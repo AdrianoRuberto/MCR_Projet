@@ -49,6 +49,21 @@ public abstract class SpellDecorator implements Spell {
 		}
 	}
 
+	public Spell addAt(int pos, SpellDecorator toAdd) {
+		if (pos < 0) throw new IndexOutOfBoundsException();
+
+		if (pos == 0) {
+			toAdd.spell = spell;
+			spell = toAdd;
+			return this;
+		} else if (spell instanceof SpellDecorator) {
+			spell = ((SpellDecorator) spell).addAt(pos - 1, toAdd);
+			return this;
+		} else {
+			throw new IndexOutOfBoundsException();
+		}
+	}
+
 	/**
 	 * Counts the number of decorators
 	 *
