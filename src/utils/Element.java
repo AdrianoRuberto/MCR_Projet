@@ -1,4 +1,4 @@
-package spells;
+package utils;
 
 public enum Element {
 	FIRE {

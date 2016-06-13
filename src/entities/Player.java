@@ -1,6 +1,6 @@
 package entities;
 
-import spells.Element;
+import utils.Element;
 
 public class Player extends Character {
 	private int level;

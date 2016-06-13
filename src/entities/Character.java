@@ -1,6 +1,6 @@
 package entities;
 
-import spells.Element;
+import utils.Element;
 
 /**
  * Represents a role played character.

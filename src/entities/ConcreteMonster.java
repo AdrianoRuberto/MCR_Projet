@@ -1,15 +1,11 @@
 package entities;
 
-import spells.Element;
+import utils.Element;
 import utils.AsciiImages;
 import utils.TerminalUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 /**

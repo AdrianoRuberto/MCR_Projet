@@ -1,9 +1,5 @@
 package utils;
 
-import spells.Element;
-
-import java.io.PrintStream;
-
 public class TerminalUtils {
 	private static final String reset = (char) 27 + "[0m";
 

@@ -3,6 +3,7 @@ import entities.Monster;
 import entities.Player;
 import spells.*;
 import utils.AsciiImages;
+import utils.Element;
 import utils.TerminalUtils;
 
 import java.io.FileNotFoundException;

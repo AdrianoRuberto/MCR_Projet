@@ -1,7 +1,5 @@
 package entities;
 
-import spells.Element;
-
 /**
  * Represents a monster decorator. Adds functionalities to them.
  */
