@@ -1,6 +1,6 @@
-package entities;
+package game.entities;
 
-import Element;
+import game.Element;
 
 import java.util.Random;
 

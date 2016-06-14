@@ -1,4 +1,4 @@
-package entities;
+package game.entities;
 
 /**
  * Represents a monster decorator. Adds functionalities to them.

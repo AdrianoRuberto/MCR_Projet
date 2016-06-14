@@ -1,6 +1,6 @@
-package entities;
+package game.entities;
 
-import Element;
+import game.Element;
 
 /**
  * Represents the player, adds level up consideration
