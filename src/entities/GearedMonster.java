@@ -67,10 +67,12 @@ public class GearedMonster extends MonsterDecorator {
 	 */
 	public static Monster generateGearedMonster(int level) {
 		Monster m = ConcreteMonster.generateConcreteMonster(level);
-		Random random = new Random();
-		int nbWeapons = random.nextInt(m.maxEquippedWeapons());
-		for (int i = 0; i < nbWeapons; i++) {
-			m = new GearedMonster(m, Item.Weapon.getRandomItem());
+		if (m.maxEquippedWeapons() > 0) {
+			Random random = new Random();
+			int nbWeapons = random.nextInt(m.maxEquippedWeapons());
+			for (int i = 0; i < nbWeapons; i++) {
+				m = new GearedMonster(m, Item.Weapon.getRandomItem());
+			}
 		}
 		return m;
 	}
@@ -78,5 +80,10 @@ public class GearedMonster extends MonsterDecorator {
 	@Override
 	public int equippedWeapons() {
 		return monster.equippedWeapons() + item.handsNeeded();
+	}
+
+	@Override
+	public String toString() {
+		return monster.toString() + ", wearing a " + item;
 	}
 }
