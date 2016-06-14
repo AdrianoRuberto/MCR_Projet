@@ -42,6 +42,11 @@ public class Ma {
 		}
 	}
 
+	/**
+	 * Start the game
+	 *
+	 * @throws InterruptedException
+	 */
 	public void start() throws InterruptedException {
 		List<Command> commands;
 		printMenu();
@@ -78,12 +83,14 @@ public class Ma {
 	 * @param monster the monster
 	 */
 	private void monsterPlay(Monster monster) {
-		System.out.println("\nThe monster attack !");
-		player.receiveDamage(monster.hit());
+		if (monster.isAlive()) {
+			System.out.println("\nThe monster attack !");
+			player.receiveDamage(monster.hit());
 
-		if (!player.isAlive()) {
-			System.out.println("YOU DIED");
-			stop();
+			if (!player.isAlive()) {
+				System.out.println("YOU DIED");
+				stop();
+			}
 		}
 	}
 
@@ -163,6 +170,11 @@ public class Ma {
 				spell.hit(player, monster);
 				return true;
 			case alter:
+				if (!(spell instanceof SpellDecorator)) {
+					System.out.println("You can't alter the spell because there isn't any decorator on it");
+					return false;
+				}
+
 				if (commands.size() == 3) {
 					try {
 						final Element toFind = commands.get(1).element;
