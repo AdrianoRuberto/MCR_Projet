@@ -44,7 +44,7 @@ public class Player extends Character {
 		mana += 1;
 		maxMana += 1;
 		System.out.printf("You've gained a level ! You are now level %d !\n", level);
-		System.out.printf(status());
+		System.out.printf(status() + "\n");
 	}
 
 	/**

@@ -52,6 +52,7 @@ public class Ma {
 		printMenu();
 		while (true) {
 			Monster monster = GearedMonster.generateGearedMonster(player.getLevel());
+			System.out.println(new String(new char[100]).replace("\0", "\n")); // clears the monitor
 			System.out.printf("%s appears ! What are you going to do ?\n", monster);
 
 			while (monster.isAlive()) {
@@ -73,7 +74,8 @@ public class Ma {
 
 			System.out.println("You killed the " + monster.getName());
 			player.levelUp();
-			Thread.sleep(random.nextInt(5000) + 3000);
+			System.out.println("Are you ready for some more fight ? (press enter)");
+			scanner.nextLine();
 		}
 	}
 
