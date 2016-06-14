@@ -59,6 +59,11 @@ public class ConcreteMonster extends Monster {
 		int rngDamage = Math.max(2, r.nextInt(type.baseDamage));
 		return new ConcreteMonster(type.name, monsterLevel, hp, baseDamage, rngDamage, type.elem) {
 			@Override
+			public int maxEquippedWeapons(){
+				return type.nbHands;
+			}
+
+			@Override
 			public String toString() {
 				return TerminalUtils.colorize(type.sprite, type.elem) + "\n" + super.toString();
 			}

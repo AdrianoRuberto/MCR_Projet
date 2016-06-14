@@ -2,14 +2,25 @@ package entities;
 
 import utils.Element;
 
+/**
+ * Represents the player, adds level up consideration
+ */
 public class Player extends Character {
 	private int level;
 
+	/**
+	 * Constructs the player
+	 * @param name the player's name
+	 */
 	public Player(String name) {
 		super(name, 1, 10, 10, Element.NORMAL);
 		this.level = 1;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String toString() {
 		return String.format("%s: Level %d", name, level);
 	}
@@ -24,7 +35,7 @@ public class Player extends Character {
 	}
 
 	/**
-	 * Level up the player
+	 * Level up the player. Changes its stats and restore a bit of its health points and mana.
 	 */
 	public void levelUp() {
 		level += 1;

@@ -6,7 +6,6 @@ import java.util.Random;
  * Decorated Monster with items
  */
 public class GearedMonster extends MonsterDecorator {
-	private Monster monster;
 	private Item item;
 
 	/**
@@ -20,10 +19,6 @@ public class GearedMonster extends MonsterDecorator {
 		if (m.equippedWeapons() + i.handsNeeded() > maxEquippedWeapons()) {
 			throw new RuntimeException("The monster can't wield this weapon, it has already too many");
 		}
-		else if (i.isArmor() && m.hasArmor()) {
-			throw new RuntimeException("A monster can only equip one armour");
-		}
-		this.monster = m;
 		this.item = i;
 	}
 
@@ -40,7 +35,7 @@ public class GearedMonster extends MonsterDecorator {
 	 */
 	@Override
 	public int minHit() {
-		return item.modifyMinHit(monster.minHit());
+		return item.modifyMinHit(m.minHit());
 	}
 
 	/**
@@ -48,7 +43,7 @@ public class GearedMonster extends MonsterDecorator {
 	 */
 	@Override
 	public int maxHit() {
-		return item.modifyMaxHit(monster.maxHit());
+		return item.modifyMaxHit(m.maxHit());
 	}
 
 	/**
@@ -56,7 +51,7 @@ public class GearedMonster extends MonsterDecorator {
 	 */
 	@Override
 	public int getMaxHealthPoints() {
-		return item.modifyHealthPoints(monster.getMaxHealthPoints());
+		return item.modifyHealthPoints(m.getMaxHealthPoints());
 	}
 
 	/**
@@ -67,16 +62,23 @@ public class GearedMonster extends MonsterDecorator {
 	 */
 	public static Monster generateGearedMonster(int level) {
 		Monster m = ConcreteMonster.generateConcreteMonster(level);
-		Random random = new Random();
-		int nbWeapons = random.nextInt(m.maxEquippedWeapons());
-		for (int i = 0; i < nbWeapons; i++) {
-			m = new GearedMonster(m, Item.Weapon.getRandomItem());
+		if (m.maxEquippedWeapons() > 0) {
+			Random random = new Random();
+			int nbWeapons = random.nextInt(m.maxEquippedWeapons());
+			for (int i = 0; i < nbWeapons; i++) {
+				m = new GearedMonster(m, Item.Weapon.getRandomItem());
+			}
 		}
 		return m;
 	}
 
 	@Override
 	public int equippedWeapons() {
-		return monster.equippedWeapons() + item.handsNeeded();
+		return m.equippedWeapons() + item.handsNeeded();
+	}
+
+	@Override
+	public String toString() {
+		return m.toString() + ", wearing a " + item;
 	}
 }
