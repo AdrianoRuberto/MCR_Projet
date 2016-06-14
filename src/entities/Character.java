@@ -71,18 +71,31 @@ public abstract class Character {
 		this.mana = mana;
 	}
 
+	/**
+	 * @return the maximal mana points a character can have
+	 */
 	public int getMaxMana() {
 		return maxMana;
 	}
 
+	/**
+	 * @return the actual health points of the character
+	 */
 	public int getHealthPoints() {
 		return healthPoints;
 	}
 
+	/**
+	 * Change the actual health points status
+	 * @param hp the new hp level
+	 */
 	public void setHealthPoints(int hp) {
 		this.healthPoints = hp;
 	}
 
+	/**
+	 * @return the maximal health points a character can have
+	 */
 	public int getMaxHealthPoints() {
 		return maxHealthPoints;
 	}

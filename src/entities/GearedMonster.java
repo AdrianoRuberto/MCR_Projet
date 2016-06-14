@@ -20,9 +20,6 @@ public class GearedMonster extends MonsterDecorator {
 		if (m.equippedWeapons() + i.handsNeeded() > maxEquippedWeapons()) {
 			throw new RuntimeException("The monster can't wield this weapon, it has already too many");
 		}
-		else if (i.isArmor() && m.hasArmor()) {
-			throw new RuntimeException("A monster can only equip one armour");
-		}
 		this.monster = m;
 		this.item = i;
 	}
