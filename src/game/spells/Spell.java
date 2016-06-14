@@ -1,6 +1,6 @@
-package spells;
+package game.spells;
 
-import entities.Character;
+import game.entities.Character;
 
 /**
  * The Spell interface with hit and getManaCost function.

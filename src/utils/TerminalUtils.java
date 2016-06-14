@@ -1,5 +1,7 @@
 package utils;
 
+import game.Element;
+
 public class TerminalUtils {
 	private static final String reset = (char) 27 + "[0m";
 

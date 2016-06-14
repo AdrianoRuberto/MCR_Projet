@@ -1,12 +1,12 @@
-import entities.GearedMonster;
-import entities.Monster;
-import entities.Player;
-import spells.ConcreteSpell;
-import spells.ElementSpellDecorator;
-import spells.Spell;
-import spells.SpellDecorator;
+import game.entities.GearedMonster;
+import game.entities.Monster;
+import game.entities.Player;
+import game.Element;
+import game.spells.ConcreteSpell;
+import game.spells.ElementSpellDecorator;
+import game.spells.Spell;
+import game.spells.SpellDecorator;
 import utils.AsciiImages;
-import utils.Element;
 import utils.TerminalUtils;
 
 import java.io.FileNotFoundException;

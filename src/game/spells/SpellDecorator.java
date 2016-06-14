@@ -1,6 +1,6 @@
-package spells;
+package game.spells;
 
-import entities.Character;
+import game.entities.Character;
 
 import java.util.function.Predicate;
 

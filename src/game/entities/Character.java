@@ -1,6 +1,6 @@
-package entities;
+package game.entities;
 
-import utils.Element;
+import game.Element;
 
 /**
  * Represents a role played character.
