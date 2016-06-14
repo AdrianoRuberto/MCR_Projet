@@ -234,13 +234,13 @@ public class Ma {
 		thunder(Element.THUNDER),
 		rock(Element.ROCK),
 		leaf(Element.LEAF),
-		rest("Recover to gain mana", "ex: 'rest'"),
+		rest("Recover to gain mana", "Type 'rest' to rest for a tour. If you rest you will gain mana, but the monster would hit you"),
 		prepare("Prepare a spell", "ex: 'prepare fire thunder rock'"),
-		cast("Cast a prepared spell", "ex: 'cast'"),
+		cast("Cast a prepared spell", "Type 'cast' to cast your prepared spell. You need to prepare a spell befor casting it"),
 		alter("Alter a spell", "ex: 'alter [src] [dst]'"),
-		menu("Displays the menu", "ex: 'menu'"),
-		help("Displays the help for a command", "ex: 'help fire'"),
-		quit("Quit Mā", "");
+		menu("Displays the menu", "Type 'menu' to display the menu"),
+		help("Displays the help for a command", "ex: 'help fire', 'help cast'"),
+		quit("Quit Mā", "Type 'quit' to quit the game");
 		String description;
 		String helpText;
 		Element element;
