@@ -1,7 +1,7 @@
 package spells;
 
 import entities.Character;
-import utils.Element;
+import Element;
 
 import java.util.LinkedList;
 import java.util.List;

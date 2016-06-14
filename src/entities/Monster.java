@@ -1,6 +1,6 @@
 package entities;
 
-import utils.Element;
+import Element;
 
 import java.util.Random;
 

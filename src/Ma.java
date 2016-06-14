@@ -6,7 +6,6 @@ import spells.ElementSpellDecorator;
 import spells.Spell;
 import spells.SpellDecorator;
 import utils.AsciiImages;
-import utils.Element;
 import utils.TerminalUtils;
 
 import java.io.FileNotFoundException;
