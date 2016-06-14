@@ -1,7 +1,7 @@
 package game.spells;
 
-import game.entities.Character;
 import game.Element;
+import game.entities.Character;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * The ElementSpellDecorator implement a decorator on the spell which add an
  * element on it.
- *
+ * <p>
  * It's only possible to have 1 unique element by spell.
  */
 public class ElementSpellDecorator extends SpellDecorator {
@@ -72,6 +72,7 @@ public class ElementSpellDecorator extends SpellDecorator {
 		else if (element.getWeak() == elem)
 			dmg *= 0.5;
 
+		System.out.println("Attack with " + element);
 		to.receiveDamage((int) dmg);
 	}
 

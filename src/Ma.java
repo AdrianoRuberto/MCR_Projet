@@ -1,7 +1,7 @@
+import game.Element;
 import game.entities.GearedMonster;
 import game.entities.Monster;
 import game.entities.Player;
-import game.Element;
 import game.spells.ConcreteSpell;
 import game.spells.ElementSpellDecorator;
 import game.spells.Spell;
@@ -53,36 +53,37 @@ public class Ma {
 
 				while (!firstPhase(commands = Command.parse(scanner.nextLine()))) {
 					if (!commands.isEmpty() && commands.get(0) == Command.rest) {
-						player.receiveDamage(monster.hit());
-
-						if (!player.isAlive()) {
-							System.out.println("YOU DIED");
-							stop();
-						}
+						monsterPlay(monster);
 					}
 				}
 
 				player.setMana(player.getMana() - spell.getManaCost());
 				System.out.println(player.status());
 
-				do {
-					System.out.print("> ");
-					commands = Command.parse(scanner.nextLine());
-				} while (!secondPhase(monster, commands));
+				while (!secondPhase(monster, Command.parse(scanner.nextLine()))) ;
 
-				// Monster play
-				if (monster.isAlive())
-					player.receiveDamage(monster.hit());
 
-				if (!player.isAlive()) {
-					System.out.println("YOU DIED");
-					stop();
-				}
+				monsterPlay(monster);
 			}
 
 			System.out.println("You killed the " + monster.getName());
 			player.levelUp();
 			Thread.sleep(random.nextInt(5000) + 3000);
+		}
+	}
+
+	/**
+	 * The monster hits the player
+	 *
+	 * @param monster the monster
+	 */
+	private void monsterPlay(Monster monster) {
+		System.out.println("\nThe monster attack !");
+		player.receiveDamage(monster.hit());
+
+		if (!player.isAlive()) {
+			System.out.println("YOU DIED");
+			stop();
 		}
 	}
 
@@ -113,28 +114,25 @@ public class Ma {
 				stop();
 				return true;
 			case prepare:
-				if (commands.size() > 1) {
-					commands.remove(0);
-					spell = new ConcreteSpell(10, manaCost);
-					try {
-						for (Command command : commands) {
-							spell = new ElementSpellDecorator(spell, command.element, manaCost);
-						}
-						if (spell.getManaCost() > player.getMana()) {
-							System.out.println("You don't have enough mana for casting "
-									                   + spell + "(" + spell.getManaCost() + ")");
-							return false;
-						} else {
-							System.out.println("You have successfully prepare the spell : "
-									                   + spell + " (" + spell.getManaCost() + ")");
-							return true;
-						}
-					} catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
-						return false;
+				commands.remove(0);
+				spell = new ConcreteSpell(10, manaCost);
+				try {
+					for (Command command : commands) {
+						spell = new ElementSpellDecorator(spell, command.element, manaCost);
 					}
+					if (spell.getManaCost() > player.getMana()) {
+						System.out.println("You don't have enough mana for casting "
+								                   + spell + "(" + spell.getManaCost() + ")");
+						return false;
+					} else {
+						System.out.println("You have successfully prepare the spell : "
+								                   + spell + " (" + spell.getManaCost() + ")");
+						return true;
+					}
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+					return false;
 				}
-				break;
 			case rest:
 				System.out.println("You decide to rest");
 				player.setMana(Math.min(player.getMana() + manaCost * 3, player.getMaxMana()));

@@ -20,6 +20,7 @@ public class ConcreteSpell implements Spell {
 	 */
 	@Override
 	public void hit(Character from, Character to) {
+		System.out.println("Normal spell");
 		to.receiveDamage(damage);
 	}
 
@@ -29,5 +30,10 @@ public class ConcreteSpell implements Spell {
 	@Override
 	public int getManaCost() {
 		return manaCost;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
 	}
 }
