@@ -68,7 +68,7 @@ public abstract class SpellDecorator implements Spell {
 	 * is valid.
 	 * {@link #addAt(int, SpellDecorator)}
 	 */
-	private Spell add_at(int pos, SpellDecorator newOne) throws IndexOutOfBoundsException {
+	private Spell addAtRecursive(int pos, SpellDecorator newOne) throws IndexOutOfBoundsException {
 		if (pos < 0) throw new IndexOutOfBoundsException();
 
 		if (pos == 0) {
@@ -76,7 +76,7 @@ public abstract class SpellDecorator implements Spell {
 			spell = newOne;
 			return this;
 		} else if (spell instanceof SpellDecorator) {
-			spell = ((SpellDecorator) spell).add_at(pos - 1, newOne);
+			spell = ((SpellDecorator) spell).addAtRecursive(pos - 1, newOne);
 			return this;
 		} else {
 			throw new IndexOutOfBoundsException();
@@ -94,7 +94,7 @@ public abstract class SpellDecorator implements Spell {
 	 */
 	public Spell addAt(int pos, SpellDecorator newOne)
 			throws IllegalArgumentException, IndexOutOfBoundsException {
-		if (isValid(add_at(pos, newOne))) {
+		if (isValid(addAtRecursive(pos, newOne))) {
 			return this;
 		} else {
 			removeAt(pos + 1);
