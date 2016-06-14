@@ -1,7 +1,10 @@
 import entities.GearedMonster;
 import entities.Monster;
 import entities.Player;
-import spells.*;
+import spells.ConcreteSpell;
+import spells.ElementSpellDecorator;
+import spells.Spell;
+import spells.SpellDecorator;
 import utils.AsciiImages;
 import utils.Element;
 import utils.TerminalUtils;
@@ -163,12 +166,12 @@ public class Ma {
 				return true;
 			case alter:
 				if (commands.size() == 3) {
-					final Element toFind = commands.get(1).element;
-					int pos = ((SpellDecorator) spell).getPos(spell, (s -> (s instanceof ElementSpellDecorator && (
-							(ElementSpellDecorator) s).getElement() == toFind)));
 					try {
+						final Element toFind = commands.get(1).element;
+						int pos = ((SpellDecorator) spell).getPos(spell, (s -> (s instanceof ElementSpellDecorator && (
+								(ElementSpellDecorator) s).getElement() == toFind)));
 						((SpellDecorator) spell).alter(pos, new ElementSpellDecorator(null, commands.get(2).element, manaCost));
-					} catch (IllegalArgumentException e) {
+					} catch (IllegalArgumentException | IndexOutOfBoundsException e) {
 						System.out.println(e.getMessage());
 					}
 					System.out.println("The spell is : " + spell + " mana : " + spell.getManaCost());

@@ -131,6 +131,6 @@ public abstract class SpellDecorator implements Spell {
 				return i;
 			}
 		}
-		throw new IndexOutOfBoundsException();
+		throw new IndexOutOfBoundsException("No spell founded");
 	}
 }
