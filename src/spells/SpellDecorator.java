@@ -122,7 +122,7 @@ public abstract class SpellDecorator implements Spell {
 	 * @param spell     the spell
 	 * @param predicate the predicate
 	 * @return the position
-	 * @throws IndexOutOfBoundsException if the spell don't match the predicate
+	 * @throws IndexOutOfBoundsException if the spell doesn't match the predicate
 	 */
 	public int getPos(Spell spell, Predicate<SpellDecorator> predicate) throws IndexOutOfBoundsException {
 		int i = 0;
